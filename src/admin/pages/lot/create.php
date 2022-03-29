@@ -15,13 +15,8 @@
     <div class="page-content">
       <form id="form-lot-create">
         <div class="block-title block-title-medium">Фото и видео</div>
-        <div class="list inset">
+        <div class="list media-list inset">
           <ul id="media-objects-box"></ul>
-        </div>
-        <div class="list inset">
-          <ul>
-            <li><a class="list-button" id="button-lot-create">Создать лот</a></li>
-          </ul>
         </div>
         <div class="block-title block-title-medium">Информация о товаре</div>
         <div class="list inset">
@@ -84,7 +79,7 @@
             </li>
             <li class="item-content item-input">
               <div class="item-inner">
-                <div class="item-title item-label">Страница из магазина</div>
+                <div class="item-title item-label">Ссылка на страницу из магазина</div>
                 <div class="item-input-wrap">
                   <input id="info-market" type="text" placeholder="https://market.yandex.ru/" value="https://market.yandex.ru/product--smartfon-apple-iphone-11/558171067" />
                   <span class="input-clear-button"></span>
@@ -93,37 +88,12 @@
             </li>
             <li class="item-content item-input">
               <div class="item-inner">
-                <div class="item-title item-label">Дополнительное описание</div>
+                <div class="item-title item-label">Ссылка на страницу с описанием</div>
                 <div class="item-input-wrap">
-                  <textarea id="info-desc" placeholder="Опишите важные">
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  </textarea>
+                  <input id="info-desc" type="text" placeholder="https://docs.google.com/document/d/" value="https://docs.google.com/document/d/1DqBxOWbOF7Z2LW53gfVgU6WWDlxt6P0dzpNBB5TwQfw" />
+                  <span class="input-clear-button"></span>
                 </div>
               </div>
-            </li>
-          </ul>
-        </div>
-        <div class="block-title block-title-medium">Опции торгов</div>
-        <div class="list inset simple-list">
-          <ul>
-            <li>
-              <span>Возможность выкупа</span>
-              <label class="toggle toggle-init">
-                <input id="opt-" type="checkbox" checked/>
-                <span class="toggle-icon"></span>
-              </label>
-            </li>
-            <li>
-              <span>Комиссия аукциона</span>
-              <label class="toggle toggle-init">
-                <input type="checkbox" checked />
-                <span class="toggle-icon"></span>
-              </label>
             </li>
           </ul>
         </div>
@@ -135,19 +105,7 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 <div class="item-inner">
                   <div class="item-title item-label">Дата и время начала</div>
                   <div class="item-input-wrap">
-                    <input type="text" placeholder="Выберите дату и время начала торгов" readonly="readonly"
-                      id="calendar-date-time-start" value="01.03.2022, 22:00" />
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="item-content item-input">
-                <div class="item-inner">
-                  <div class="item-title item-label">Дата и время окончания</div>
-                  <div class="item-input-wrap">
-                    <input type="text" placeholder="Выберите дату и время окончания торгов" readonly="readonly"
-                      id="calendar-date-time-end" value="27.03.2022, 23:00" />
+                    <input id="bidding-date" type="text" placeholder="Выберите дату и время начала торгов" readonly="readonly" value="29.03.2022, 02:00" />
                   </div>
                 </div>
               </div>
@@ -156,25 +114,52 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
               <div class="item-inner">
                 <div class="item-title item-label">Стартовая цена</div>
                 <div class="item-input-wrap">
-                  <input type="number" placeholder="1000" value="1000" />
+                  <input id="bidding-price" type="number" placeholder="1000" value="1000" />
                   <span class="input-clear-button"></span>
                 </div>
               </div>
             </li>
+          </ul>
+        </div>
+        <div class="block-title block-title-medium">Опции торгов</div>
+        <div class="list inset simple-list">
+          <ul>
+            <li>
+              <span>Возможность выкупа</span>
+              <label class="toggle toggle-init">
+                <input id="options-redemption" type="checkbox" checked/>
+                <span class="toggle-icon"></span>
+              </label>
+            </li>
+            <li>
+              <span>Комиссия аукциона</span>
+              <label class="toggle toggle-init">
+                <input id="options-commission" type="checkbox" checked />
+                <span class="toggle-icon"></span>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="list inset">
+          <ul>
             <li class="item-content item-input">
               <div class="item-inner">
                 <div class="item-title item-label">Цена выкупа</div>
                 <div class="item-input-wrap">
-                  <input type="number" placeholder="5000" value="5000" />
+                  <input id="bidding-redemption" type="number" placeholder="5000" value="5000" />
                   <span class="input-clear-button"></span>
                 </div>
               </div>
             </li>
+          </ul>
+        </div>
+        <div class="list inset">
+          <ul>
             <li class="item-content item-input">
               <div class="item-inner">
                 <div class="item-title item-label">Комиссия аукциона в рублях</div>
                 <div class="item-input-wrap">
-                  <input type="number" placeholder="10" value="15" />
+                  <input id="bidding-commission" type="number" placeholder="10" value="15" />
                   <span class="input-clear-button"></span>
                 </div>
               </div>
@@ -183,7 +168,7 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
               <div class="item-inner">
                 <div class="item-title item-label">Логин продавца в Telegram</div>
                 <div class="item-input-wrap">
-                  <input type="text" placeholder="@Nikita_Komissarov" value="@Nikita_Komissarov" />
+                  <input id="bidding-seller" type="text" placeholder="Nikita_Komissarov" value="Nikita_Komissarov" />
                   <span class="input-clear-button"></span>
                 </div>
               </div>
@@ -202,29 +187,177 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 <script>
   export default (props, { $, $f7, $on }) => {
-    let calendarDateTimeStart;
-    let calendarDateTimeEnd;
+    let date = new Date();
+    let categories;
+    let autocompleteCategories;
+
+    let calendarDate;
 
     let autocompleteCity;
     let autocompleteAddress;
+    let autocompleteCityAjax = app.request.abortController();;
+    let autocompleteAddressAjax = app.request.abortController();;
 
     let media = [];
 
     $on('pageInit', () => {
 
+      $('#button-lot-create').on('click', function() {
+        let data = new Object();
+
+        data.info = {
+          type: +getVal($('#info-type')),
+          category: autocompleteCategories.value[0],
+          name: getVal($('#info-name')),
+          city: getVal($('#info-city')),
+          address: getVal($('#info-address')),
+          average: getVal($('#info-average')),
+          market: getVal($('#info-market')),
+          desc: getVal($('#info-desc')),
+        };
+        data.options = {
+          redemption: $('#options-redemption').is(":checked"),
+          commission: $('#options-commission').is(":checked"),
+        };
+        data.bidding = {
+          date: getVal($('#bidding-date')),
+          price: +getVal($('#bidding-price')),
+          redemption: +getVal($('#bidding-redemption')),
+          commission: +getVal($('#bidding-commission')),
+          seller: getVal($('#bidding-seller')),
+        };
+        data.media = media;
+
+console.log("data", data);
+        if(data.media.length == 1) return $f7.dialog.alert('Добавьте хотя бы один медиафайл');
+        if(!data.info.category) return $f7.dialog.alert('Укажите категорию');
+        if(!data.info.name.length) return $f7.dialog.alert('Укажите название');
+        if(!data.info.city.length) return $f7.dialog.alert('Укажите город');
+        if(!data.info.address.length) return $f7.dialog.alert('Укажите адрес самовывоза');
+
+        if(!data.bidding.date.length) return $f7.dialog.alert('Укажите дату и время начала торгов');
+
+        if(data.options.redemption) {
+          if(data.bidding.redemption <= 0) return $f7.dialog.alert('Укажите цену выкупа или отключите выкуп лота');
+          if(data.bidding.price >= data.bidding.redemption) return $f7.dialog.alert('Цена выкупа должна быть больше стартовой цены');
+        }
+
+        if(data.options.commission) {
+          if(data.bidding.commission < 0) return $f7.dialog.alert('Комиссия аукциона должна быть больше или равна нулю');
+          if(!data.bidding.seller.length) return $f7.dialog.alert('Укажите Telegram логин продавца или отключите комиссию');
+          if(data.bidding.seller.charAt(0) == '@') return $f7.dialog.alert('Telegram логин продавца <b>не</b> должен начинаться с "@"');
+        }
+
+        function isValidHttpUrl(string) {
+          let url;
+          try {
+            url = new URL(string);
+          } catch (_) {
+            return false;
+          }
+          return url.protocol === "http:" || url.protocol === "https:";
+        }
+        if(!isValidHttpUrl(data.info.market)) return $f7.dialog.alert('Ссылка на <b>страницу в магазине</b> не является правильной');
+        if(!isValidHttpUrl(data.info.desc)) return $f7.dialog.alert('Ссылка на <b>страницу с описанием</b> не является правильной');
+
+        let mediaDuplicate = false;
+        data.media.forEach((comparable, comparableIndex) => {
+          data.media.forEach((compared, comparedIndex) => {
+            //Если разный индекс
+            if(comparableIndex != comparedIndex){
+              //Если одинаковое время последнего изменения
+              if(comparable.lastModified == compared.lastModified){
+                //Если одинаковый размер
+                if(comparable.size == compared.size){
+                  //Значит это дубль?
+                  mediaDuplicate = true;
+                }
+              }
+            }
+          });
+        });
+        if(mediaDuplicate) return $f7.dialog.alert('Найдены дубликаты в списке медиафайлов, избавьтесь от них');
+
+        $f7.dialog.alert('Начало загрузки');
+      });
+
+      $('#options-redemption').on('change', function() {
+        if($(this).is(":checked")){
+          $('#bidding-redemption').closest('.list').show();
+        }
+        else {
+          $('#bidding-redemption').closest('.list').hide();
+        }
+      });
+
+      $('#options-commission').on('change', function() {
+        if($(this).is(":checked")){
+          $('#bidding-commission').closest('.list').show();
+        }
+        else {
+          $('#bidding-commission').closest('.list').hide();
+        }
+      });
+
+      app.request({
+        url: '/server/proc/get_items_categories.php', 
+        method: 'GET',
+        dataType: 'json',
+      })
+      .then(function(res) {
+        categories = res.data;
+        console.log("categories", categories);
+        autocompleteCategories = $f7.autocomplete.create({
+          openIn: 'page', //open in page
+          openerEl: '#info-category', //link that opens autocomplete
+          closeOnSelect: true, //go back after we select something
+          requestSourceOnOpen: true,
+          pageBackLinkText: 'Назад',
+          searchbarDisableText: 'Отменить',
+          searchbarPlaceholder: 'Поиск...',
+          notFoundText: 'Ничего не нашлось',
+          source: function (query, render) {
+            var results = [];
+            if (query.length === 0) {
+              render(categories);
+              return;
+            }
+            // Find matched items
+            for (var i = 0; i < categories.length; i++) {
+              if (categories[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(categories[i]);
+            }
+            // Render items by passing array with result items
+            render(results);
+          },
+          on: {
+            change: function (value) {
+              console.log(value);
+              // Add item text value to item-after
+              $('#info-category').find('.item-after').text(value[0]);
+              // Add item value to input value
+              $('#info-category').find('input').val(value[0]);
+            },
+          },
+        });
+      });
+
       function createNewMediaObject(){
         let mediaCount = $('#media-objects-box').find('li').length;
+        if(mediaCount >= 5) return true;
         media.push({
           file: null,
         });
         $('#media-objects-box').append('\
           <li data-id="' + mediaCount + '">\
             <a href="#" class="item-link item-content media-upload-btn">\
-              <div class="item-media"><img src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg"\
+              <div class="item-media"><img src="/assets/img/aperture.png"\
                   width="50" /></div>\
               <div class="item-inner">\
-                <div class="item-title">Фотография</div>\
-                <div class="item-after">Выбрать</div>\
+                <div class="item-title-row">\
+                  <div class="item-title">Новый медиафайл</div>\
+                  <div class="item-after">Выбрать</div>\
+                </div>\
+                <div class="item-text">Выберите фото или видео</div>\
               </div>\
             </a>\
             <input type="file" hidden class="media-upload-input"/>\
@@ -276,7 +409,13 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
         if(!$(li).attr('selected')) createNewMediaObject();
 
+
+console.log("file", file);
         $(li).attr('selected', true);
+        $(li).find('.item-after').html('Изменить');
+        $(li).find('.item-title').html(file.name);
+        $(li).find('.item-text').html((file.size / (1024*1024)).toFixed(2) + 'MB, ' + file.type);
+
         media[$(li).attr('data-id')] = file;
       });
 
@@ -284,46 +423,24 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         return $(input).val().trim();
       }
 
-      $('#button-lot-create').on('click', function() {
-        let data = new Object();
-        data.info = {
-          type: +getVal($('#info-type')),
-          name: getVal($('#info-name')),
-          city: getVal($('#info-city')),
-          address: getVal($('#info-address')),
-          average: getVal($('#info-average')),
-          market: getVal($('#info-market')),
-          desc: getVal($('#info-desc')),
-        };
-        data.options = new Object();
-        data.bidding = new Object();
-        data.media = new Object();
-
-
-console.log("data", data);
-      });
-
       // Date + Time
-      calendarDateTimeStart = $f7.calendar.create({
-        inputEl: '#calendar-date-time-start',
+      calendarDate = $f7.calendar.create({
+        inputEl: '#bidding-date',
         timePicker: true,
+        minDate: date,
+        timePickerPlaceholder: 'Укажите время',
+        toolbarCloseText: 'Готово',
         dateFormat: { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' },
       });
-      calendarDateTimeEnd = $f7.calendar.create({
-        inputEl: '#calendar-date-time-end',
-        timePicker: true,
-        dateFormat: { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' },
-      });
+
+      var abortController = app.request.abortController();
 
       autocompleteCity = $f7.autocomplete.create({
-        inputEl: '#autocomplete-city',
+        inputEl: '#info-city',
         openIn: 'dropdown',
-        preloader: true, //enable preloader
-        /* If we set valueProperty to "id" then input value on select will be set according to this property */
-        valueProperty: 'name', //object's "value" property name
-        textProperty: 'name', //object's "text" property name
-        limit: 5, //limit to 20 results
-        dropdownPlaceholderText: 'Try "JavaScript"',
+        preloader: true,
+        limit: 20,
+        dropdownPlaceholderText: 'Попробуйте, "Москва"',
         source: function (query, render) {
           var autocomplete = this;
           var results = [];
@@ -331,40 +448,34 @@ console.log("data", data);
             render(results);
             return;
           }
-          // Show Preloader
           autocomplete.preloaderShow();
 
-          // Do Ajax request to Autocomplete data
-          $f7.request({
-            url: './autocomplete-languages.json',
-            method: 'GET',
-            dataType: 'json',
-            //send "query" to server. Useful in case you generate response dynamically
-            data: {
-              query: query,
-            },
-            success: function (data) {
-              // Find matched items
-              for (var i = 0; i < data.length; i++) {
-                if (data[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(data[i]);
-              }
-              // Hide Preoloader
-              autocomplete.preloaderHide();
-              // Render items by passing array with result items
-              render(results);
+          setTimeout(function() {
+            if($('#info-city').val() == query){
+              $f7.request({
+                url: '/server/proc/address.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                  query: query,
+                  type: 'city',
+                },
+                success: function (data) {
+                  autocomplete.preloaderHide();
+                  render(data);
+                }
+              });
             }
-          });
+          }, 500);
+
         }
       });
-
-      autocompleteStandaloneAjax = $f7.autocomplete.create({
-        openIn: 'page', //open in page
-        openerEl: '#info-category', //link that opens autocomplete
-        multiple: false, //allow multiple values
-        valueProperty: 'id', //object's "value" property name
-        textProperty: 'name', //object's "text" property name
-        limit: 50,
-        preloader: true, //enable preloader
+      autocompleteAddress = $f7.autocomplete.create({
+        inputEl: '#info-address',
+        openIn: 'dropdown',
+        preloader: true,
+        limit: 20,
+        dropdownPlaceholderText: 'Попробуйте, "Москва, ленинградский проспект, дом 1"',
         source: function (query, render) {
           var autocomplete = this;
           var results = [];
@@ -372,43 +483,26 @@ console.log("data", data);
             render(results);
             return;
           }
-          // Show Preloader
           autocomplete.preloaderShow();
-          // Do Ajax request to Autocomplete data
-          $f7.request({
-            url: './autocomplete-languages.json',
-            method: 'GET',
-            dataType: 'json',
-            //send "query" to server. Useful in case you generate response dynamically
-            data: {
-              query: query
-            },
-            success: function (data) {
-              // Find matched items
-              for (var i = 0; i < data.length; i++) {
-                if (data[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(data[i]);
-              }
-              // Hide Preoloader
-              autocomplete.preloaderHide();
-              // Render items by passing array with result items
-              render(results);
+
+          setTimeout(function() {
+            if($('#info-address').val() == query){
+              $f7.request({
+                url: '/server/proc/address.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                  query: query,
+                  type: 'full',
+                },
+                success: function (data) {
+                  autocomplete.preloaderHide();
+                  render(data);
+                }
+              });
             }
-          });
-        },
-        on: {
-          change: function (value) {
-            var itemText = [],
-              inputValue = [];
-            for (var i = 0; i < value.length; i++) {
-              itemText.push(value[i].name);
-              inputValue.push(value[i].id);
-            }
-            // Add item text value to item-after
-            $('#autocomplete-standalone-ajax').find('.item-after').text(itemText.join(', '));
-            // Add item value to input value
-            $('#autocomplete-standalone-ajax').find('input').val(inputValue.join(', '));
-          },
-        },
+          }, 500);
+        }
       });
     });
 

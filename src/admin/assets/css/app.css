@@ -10,6 +10,10 @@
     url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
 }
 
+.panel-border {
+  border-right: 1px solid #c7c7c7;
+}
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;

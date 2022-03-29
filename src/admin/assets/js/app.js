@@ -10,6 +10,9 @@ var app = new Framework7({
   store: store,
   // routes.js,
   routes: routes,
+  dialog: {
+    title: 'Панель управления',
+  },
   popup: {
     closeOnEscape: true,
   },

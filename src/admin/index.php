@@ -23,8 +23,8 @@
 
 <body>
   <div id="app">
-    <?php if($auth) : ?>
-    <div class="panel panel-left panel-cover panel-push panel-init" data-visible-breakpoint="960">
+    <?php if($admin) : ?>
+    <div class="panel panel-left panel-cover panel-push panel-init panel-border" data-visible-breakpoint="960">
       <div class="page">
         <div class="page-content">
           <div class="block-title">Основное</div>

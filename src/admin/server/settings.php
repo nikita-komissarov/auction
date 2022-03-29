@@ -20,3 +20,6 @@
   define('DB_TABLE', 'auction');
   define('DB_USER', 'auction');
   define('DB_PASS', 'fb8fcddc705541ff89c66ed031bcf90b');
+
+  define('DADATA_TOKEN', '8ee449e223f617af130729df70868292783a7c56');
+  define('DADATA_SECRET', 'b4cae5a1cb7205bb8927939bd65bc7ca9dc880ca');
