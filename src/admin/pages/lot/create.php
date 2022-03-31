@@ -14,8 +14,41 @@
     </div>
     <div class="page-content">
       <form id="form-lot-create">
-        <div class="block-title block-title-medium">Фото и видео</div>
-        <div class="list media-list inset">
+        <div class="block-title block-title-medium">Опции лота</div>
+        <div class="list inset simple-list">
+          <ul>
+            <li>
+              <span>Возможность выкупа</span>
+              <label class="toggle toggle-init">
+                <input id="options-redemption" type="checkbox" checked/>
+                <span class="toggle-icon"></span>
+              </label>
+            </li>
+            <li>
+              <span>Комиссия аукциона</span>
+              <label class="toggle toggle-init">
+                <input id="options-commission" type="checkbox" checked />
+                <span class="toggle-icon"></span>
+              </label>
+            </li>
+            <li>
+              <span>Несколько товаров</span>
+              <label class="toggle toggle-init">
+                <input id="options-mystery" type="checkbox" />
+                <span class="toggle-icon"></span>
+              </label>
+            </li>
+            <li>
+              <span>Mystery Box</span>
+              <label class="toggle toggle-init">
+                <input id="options-mystery" type="checkbox" />
+                <span class="toggle-icon"></span>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="block-title block-title-medium">Фотографии</div>
+        <div class="list media-list inset sortable sort-media">
           <ul id="media-objects-box"></ul>
         </div>
         <div class="block-title block-title-medium">Информация о товаре</div>
@@ -121,25 +154,6 @@
             </li>
           </ul>
         </div>
-        <div class="block-title block-title-medium">Опции торгов</div>
-        <div class="list inset simple-list">
-          <ul>
-            <li>
-              <span>Возможность выкупа</span>
-              <label class="toggle toggle-init">
-                <input id="options-redemption" type="checkbox" checked/>
-                <span class="toggle-icon"></span>
-              </label>
-            </li>
-            <li>
-              <span>Комиссия аукциона</span>
-              <label class="toggle toggle-init">
-                <input id="options-commission" type="checkbox" checked />
-                <span class="toggle-icon"></span>
-              </label>
-            </li>
-          </ul>
-        </div>
         <div class="list inset">
           <ul>
             <li class="item-content item-input">
@@ -201,6 +215,7 @@
     let media = [];
 
     $on('pageInit', () => {
+      app.sortable.enable('.sort-media');
 
       $('#button-lot-create').on('click', function() {
         let data = new Object();
@@ -299,6 +314,15 @@ console.log("data", data);
         }
       });
 
+      $('#options-mystery').on('change', function() {
+        if($(this).is(":checked")){
+          $('#info-market').closest('.item-content').hide();
+        }
+        else {
+          $('#info-market').closest('.item-content').show();
+        }
+      });
+
       app.request({
         url: '/server/proc/get_items_categories.php', 
         method: 'GET',
@@ -347,22 +371,22 @@ console.log("data", data);
         media.push({
           file: null,
         });
-        $('#media-objects-box').append('\
-          <li data-id="' + mediaCount + '">\
-            <a href="#" class="item-link item-content media-upload-btn">\
-              <div class="item-media"><img src="/assets/img/aperture.png"\
-                  width="50" /></div>\
-              <div class="item-inner">\
-                <div class="item-title-row">\
-                  <div class="item-title">Новый медиафайл</div>\
-                  <div class="item-after">Выбрать</div>\
-                </div>\
-                <div class="item-text">Выберите фото или видео</div>\
-              </div>\
-            </a>\
-            <input type="file" hidden class="media-upload-input"/>\
-          </li>\
-        ');
+        $('#media-objects-box').append(`\
+          <li data-id="` + mediaCount + `">\
+            <a href="#" class="item-link item-content media-upload-btn">
+              <div class="item-media"><img src="/assets/img/aperture.png"
+                  width="50" /></div>
+              <div class="item-inner">
+                <div class="item-title-row">
+                  <div class="item-title">Добавить фотографию</div>
+                </div>
+                <div class="item-text">Нажмите чтобы выбрать файл</div>
+              </div>
+            </a>
+            <div class="sortable-handler" style="display: none;"></div>
+            <input type="file" hidden class="media-upload-input"/>
+          </li>
+        `);
       }
       createNewMediaObject();
 
@@ -412,16 +436,13 @@ console.log("data", data);
 
 console.log("file", file);
         $(li).attr('selected', true);
+        $(li).find('.sortable-handler').css('display', null);
         $(li).find('.item-after').html('Изменить');
         $(li).find('.item-title').html(file.name);
         $(li).find('.item-text').html((file.size / (1024*1024)).toFixed(2) + 'MB, ' + file.type);
 
         media[$(li).attr('data-id')] = file;
       });
-
-      function getVal(input){
-        return $(input).val().trim();
-      }
 
       // Date + Time
       calendarDate = $f7.calendar.create({

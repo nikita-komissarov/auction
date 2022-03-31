@@ -23,7 +23,7 @@
     <div class="page-content">
       <div class="list simple-list searchbar-not-found">
         <ul>
-          <li>Nothing found</li>
+          <li>Совпадений не найдено</li>
         </ul>
       </div>
       <div class="list virtual-list media-list searchbar-found"></div>

@@ -16,9 +16,9 @@ var routes = [
     name: 'lot-create',
   },
   {
-    path: '/stock/create/',
-    componentUrl: './pages/stock/create.php',
-    name: 'stock-create',
+    path: '/shop/create/',
+    componentUrl: './pages/shop/create.php',
+    name: 'shop-create',
   },
   {
     path: '/stock/search/',

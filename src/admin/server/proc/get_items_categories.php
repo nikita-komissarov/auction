@@ -7,7 +7,10 @@
   $data = R::findAll('items__categories');
   $categories = [];
   foreach($data as $key => $value) {
-    $categories[] = $value->name;
+    $categories[] = [
+      'id' => $value->id,
+      'text' => $value->name,
+    ];
   }
   exit(json_encode($categories));
 

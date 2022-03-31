@@ -26,3 +26,8 @@ var app = new Framework7({
     closeOnEscape: true,
   },
 });
+
+function getVal(input){
+  if(!$(input).val()) return null;
+  return $(input).val().trim();
+}
