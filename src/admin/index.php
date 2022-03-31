@@ -49,6 +49,28 @@
               </li>
             </ul>
           </div>
+          <div class="block-title">Магазин</div>
+          <div class="list links-list">
+            <ul>
+              <li>
+                <a href="/lot/create/" class="panel-close">Совершить продажу</a>
+              </li>
+              <li>
+                <a href="/stock/create/" class="panel-close">Добавить товар</a>
+              </li>
+            </ul>
+          </div>
+          <div class="block-title">Склад</div>
+          <div class="list links-list">
+            <ul>
+              <li>
+                <a href="/stock/search/" class="panel-close">Поиск товара</a>
+              </li>
+              <li>
+                <a href="/badge/" class="panel-close">Ожидающие медиа</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -77,7 +99,7 @@
         </div>
       </div>
     </div>
-    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/lot/create/"></div>
+    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/stock/create/"></div>
     <?php else : ?>
     <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/auth/"></div>
     <?php endif; ?>

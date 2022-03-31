@@ -15,6 +15,16 @@ var routes = [
     componentUrl: './pages/lot/create.php',
     name: 'lot-create',
   },
+  {
+    path: '/stock/create/',
+    componentUrl: './pages/stock/create.php',
+    name: 'stock-create',
+  },
+  {
+    path: '/stock/search/',
+    componentUrl: './pages/stock/search.php',
+    name: 'stock-search',
+  },
   // Default route (404 page). MUST BE THE LAST
   {
     path: '(.*)',
