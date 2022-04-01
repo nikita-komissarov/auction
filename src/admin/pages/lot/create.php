@@ -263,15 +263,6 @@ console.log("data", data);
           if(data.bidding.seller.charAt(0) == '@') return $f7.dialog.alert('Telegram логин продавца <b>не</b> должен начинаться с "@"');
         }
 
-        function isValidHttpUrl(string) {
-          let url;
-          try {
-            url = new URL(string);
-          } catch (_) {
-            return false;
-          }
-          return url.protocol === "http:" || url.protocol === "https:";
-        }
         if(!isValidHttpUrl(data.info.market)) return $f7.dialog.alert('Ссылка на <b>страницу в магазине</b> не является правильной');
         if(!isValidHttpUrl(data.info.desc)) return $f7.dialog.alert('Ссылка на <b>страницу с описанием</b> не является правильной');
 

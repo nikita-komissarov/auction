@@ -56,7 +56,7 @@
                 <a href="/lot/create/" class="panel-close">Совершить продажу</a>
               </li>
               <li>
-                <a href="/stock/create/" class="panel-close">Добавить товар</a>
+                <a href="/shop/create/" class="panel-close">Добавить товар</a>
               </li>
             </ul>
           </div>
@@ -99,7 +99,7 @@
         </div>
       </div>
     </div>
-    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/shop/create/"></div>
+    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/stock/search/"></div>
     <?php else : ?>
     <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/auth/"></div>
     <?php endif; ?>

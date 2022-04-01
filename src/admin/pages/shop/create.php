@@ -21,7 +21,7 @@
               <div class="item-inner">
                 <div class="item-title item-label">Артикул</div>
                 <div class="item-input-wrap">
-                  <input id="article" type="number" placeholder="Артикул на упаковке" />
+                  <input id="article" type="number" placeholder="Артикул на упаковке" value="123456" />
                   <span class="input-clear-button"></span>
                   <div class="item-input-info">Используйте сканер штрих-кода</div>
                 </div>
@@ -31,7 +31,7 @@
               <div class="item-inner">
                 <div class="item-title item-label">Название товара</div>
                 <div class="item-input-wrap">
-                  <input id="name" type="text" placeholder="Название товара"/>
+                  <input id="name" type="text" placeholder="Название товара" value="Блендер" />
                   <span class="input-clear-button"></span>
                 </div>
               </div>
@@ -75,7 +75,7 @@
               <div 
                 class="text-editor text-editor-resizable"
                 data-placeholder="Введите описание товара">
-                <div id="description" class="text-editor-content" contenteditable>Проверка <b>текста</b></div>
+                <div id="description" class="text-editor-content" contenteditable></div>
               </div>
             </div>
           </div>
@@ -154,9 +154,9 @@
       });
 
       $('#button-item-create').on('click', function() {
-        let data = new Object();
+        let form = new Object();
 
-        data = {
+        form = {
           article: +getVal($el.value.find('#article')),
           name: getVal($el.value.find('#name')),
           category: +getVal($el.value.find('#category').find('input')),
@@ -166,8 +166,61 @@
           description: app.textEditor.get(textEditor).value,
         };
 
-console.log("data", data);
+console.log("form", form);
 
+        if(form.article == 0) return $f7.dialog.alert('Укажите артикул товара');
+        if(!form.name) return $f7.dialog.alert('Укажите название товара');
+        if(form.category == 0) return $f7.dialog.alert('Укажите категорию товара');
+
+        $f7.dialog.preloader('Создание товара...');
+        $f7.request({
+          url: '/server/proc/shop/create.php',
+          method: 'POST',
+          dataType: 'json',
+          data: {
+            article: form.article,
+            name: form.name,
+            category: form.category,
+
+            price: form.price,
+            market: form.market,
+            description: form.description,
+          },
+          success: function (data) {
+            console.log("data", data);
+            if(data == 'article is exist') {
+              $f7.dialog.close();
+              return $f7.dialog.create({
+                title: form.article,
+                text: 'Этот артикул уже существует',
+                buttons: [
+                  {
+                    text: 'Ок',
+                  },
+                ],
+                verticalButtons: true,
+              }).open();
+            }
+
+            $f7.dialog.close();
+            $f7.dialog.alert('Товар успешно добавлен');
+
+            $el.value.find('#article').val(null);
+            $el.value.find('#name').val(null);
+            
+            $el.value.find('#category').find('.item-after').text('');
+            $el.value.find('#category').find('input').val(0);
+
+            $el.value.find('#price').val(null);
+            $el.value.find('#market').val(null);
+
+            $el.value.find('#description').html('');
+          },
+          error: function (data) {
+            $f7.dialog.close();
+            $f7.dialog.alert('Ошибка создания товара');
+          }
+        });
         // $f7.dialog.create({
         //   title: 'Подтвердите сохранение',
         //   buttons: [

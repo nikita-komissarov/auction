@@ -31,3 +31,13 @@ function getVal(input){
   if(!$(input).val()) return null;
   return $(input).val().trim();
 }
+
+function isValidHttpUrl(string) {
+  let url;
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+  return url.protocol === "http:" || url.protocol === "https:";
+}
