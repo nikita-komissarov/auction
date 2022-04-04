@@ -74,7 +74,7 @@
                       <div class="item-after">${item.price} руб</div>
                     </div>
                     <div class="item-subtitle">${item.article}</div>
-                    <div class="item-text">${item.category.name}<br>Всего 7 штук</div>
+                    <div class="item-text">${item.category.name}<br>${item.count} шт</div>
                   </div>
                 </a>
               </li>`;
