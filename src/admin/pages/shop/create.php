@@ -21,7 +21,7 @@
               <div class="item-inner">
                 <div class="item-title item-label">Артикул</div>
                 <div class="item-input-wrap">
-                  <input id="article" type="number" placeholder="Артикул на упаковке" value="123456" />
+                  <input id="article" class="scanner-input" type="number" placeholder="Артикул на упаковке" value="123456" />
                   <span class="input-clear-button"></span>
                   <div class="item-input-info">Используйте сканер штрих-кода</div>
                 </div>
@@ -97,7 +97,9 @@
 
     let textEditor;
 
-    $on('pageInit', () => {
+    $on('pageInit', (e, page) => {
+      scannerFocusEl = $(page.el).find('.scanner-input');
+
       textEditor = $f7.textEditor.create({
         el: $el.value.find('.text-editor'),
         placeholder: 'Введите описание товара',
