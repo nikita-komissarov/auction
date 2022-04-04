@@ -64,7 +64,7 @@
       <div class="block block-strong inset" id="item-description"></div>
       <div class="block-title">Наличие на складах</div>
       <div class="list inset">
-        <ul id="stocks"></ul>
+        <ul id="stocks-item-${props.id}"></ul>
       </div>
     </div>
   </div>
@@ -75,30 +75,31 @@
   }
 </style>
 <script>
-  export default (props, { $f7, $el, $theme, $on, $update }) => {
+  export default (props, {$f7, $el, $theme, $on, $update }) => {
     console.log("props", props);
 
     $on('pageInit', (e, page) => { 
+
       $(page.el).find('#item-description').html(props.item.info.description);
 
 
       //stock
       props.item.stocks.forEach((stock) => {
-        $(page.el).find('#stocks').append(`
+        $(page.el).find('#stocks-item-' + props.id).append(`
 <li id="stock-${stock.id}" data-id="${stock.id}" class="item-content">
   <div class="item-inner">
     <div class="item-title">
-      <div class="name item-footer">${stock.name}</div>
-      <a href="#" data-id="${stock.id}" class="stock-rack">AAAA</a> <b>-</b> <a href="#" data-id="${stock.id}" class="stock-cell">0</a>
-      <div class="address item-footer">${stock.address}</div>
+      <div class="item-header">${stock.name}</div>
+      <a href="#" data-id="${stock.id}" class="stock-rack">${stock.rack}</a> <b>-</b> <a href="#" data-id="${stock.id}" class="stock-cell">${stock.cell}</a>
+      <div class="item-footer">${stock.address}</div>
     </div>
     <div class="item-after">
       <div class="stepper stepper-init">
-        <div class="stepper-button-minus"></div>
+        <div data-val="-1" class="stock-count-btn stepper-button-minus"></div>
         <div class="stepper-input-wrap">
-          <input type="text" value="${stock.count}" min="0" step="1" readonly />
+          <input class="stock-count" type="text" value="${stock.count}" min="0" step="1" readonly />
         </div>
-        <div class="stepper-button-plus"></div>
+        <div data-val="1" class="stock-count-btn stepper-button-plus"></div>
       </div>
     </div>
   </div>
@@ -106,14 +107,68 @@
         `);
       });
 
+      $(page.el).find('.stock-count-btn').on('click', function() {
+        let li = $(this).closest('li');
+        let stock = +$(li).attr('data-id');
+        let count = +$(li).find('.stock-count').val();
+        let val = +$(this).attr('data-val');
+
+        if((count + val) < 0) return $f7.dialog.alert('Количество товара на складе не может быть меньше нуля');
+        $(li).find('.stock-count-btn').addClass('disabled');
+        $f7.request({
+          url: '/server/proc/stock/count.php',
+          method: 'POST',
+          dataType: 'json',
+          data: {
+            item: props.id,
+            stock: stock,
+            val: val,
+          },
+          success: function (data) {
+            $f7.dialog.close();
+            $(li).find('.stock-count').val(data);
+            $(li).find('.stock-count-btn').removeClass('disabled');
+          },
+          error: function (data) {
+            $f7.dialog.close();
+            $f7.dialog.alert('Ошибка изменения ячейки');
+          }
+        });
+      });
+
+      function saveStock(id, rack, cell){
+        $f7.dialog.preloader('Изменение ячейки...');
+        $f7.request({
+          url: '/server/proc/stock/place.php',
+          method: 'POST',
+          dataType: 'json',
+          data: {
+            item: props.id,
+            stock: id,
+            rack: rack,
+            cell: cell,
+          },
+          success: function (data) {
+            $f7.dialog.close();
+
+            if(rack) $('#stock-' + id).find('.stock-rack').html(rack);
+            if(cell) $('#stock-' + id).find('.stock-cell').html(cell);
+          },
+          error: function (data) {
+            $f7.dialog.close();
+            $f7.dialog.alert('Ошибка изменения ячейки');
+          }
+        });
+      }
+
       $(page.el).find('.stock-rack').on('click', function(event) {
         event.preventDefault();
 
 
         let stock = $(this).closest('li');
         $f7.dialog.prompt(
-          'Укажите стеллаж в формате "ABCD" буквами <u>латинского</u> алфавита',
-          $(stock).find('.name').html(),
+          'Укажите стеллаж в формате "ABCD" буквами латинского алфавита',
+          $(stock).find('.item-header').html(),
           function (rack) {
             let test = /^[a-zA-Z]+$/.test(rack);
             if(!test) {
@@ -123,6 +178,7 @@
               return $f7.dialog.alert('Введите 4 буквы в формате "ABCD"<br><br><b>Изменения не применены</b>');
             }
             rack = rack.toUpperCase();
+            saveStock($(stock).attr('data-id'), rack, null);
           },
           function () {},
           $(stock).find('.stock-rack').html(),
@@ -136,7 +192,7 @@
         let stock = $(this).closest('li');
         $f7.dialog.prompt(
           'Укажите ячейку числом с 0 по 1000',
-          $(stock).find('.name').html(),
+          $(stock).find('.item-header').html(),
           function (cell) {
             let test = /^[0-9]+$/.test(cell);
             if(!test) {
@@ -144,28 +200,7 @@
             }
             cell = +cell;
             if(cell < 0 || cell > 1000) return $f7.dialog.alert('Введите число с 0 по 1000<br><br><b>Изменения не применены</b>');
-            console.log("cell", cell);
-
-            $f7.dialog.preloader('Изменение ячейки...');
-            $f7.request({
-              url: '/server/proc/stock/place.php',
-              method: 'POST',
-              dataType: 'json',
-              data: {
-                item: props.id,
-                stock: $(stock).attr('data-id'),
-                rack: null,
-                cell: cell,
-              },
-              success: function (data) {
-                $f7.dialog.close();
-                $f7.dialog.alert('Новая ячейка успешно сохранена');
-              },
-              error: function (data) {
-                $f7.dialog.close();
-                $f7.dialog.alert('Ошибка изменения ячейки');
-              }
-            });
+            saveStock($(stock).attr('data-id'), null, cell);
           },
           function () {},
           +$(stock).find('.stock-cell').html(),
