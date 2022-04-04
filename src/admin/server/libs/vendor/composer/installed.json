@@ -573,5 +573,53 @@
         ],
         "description": "A generic function and convention to trigger deprecation notices",
         "homepage": "https://symfony.com"
+    },
+    {
+        "name": "workerman/workerman",
+        "version": "v4.0.33",
+        "version_normalized": "4.0.33.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/walkor/workerman.git",
+            "reference": "7e7a95d38abf2a878438070aa8934029059d6866"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/walkor/workerman/zipball/7e7a95d38abf2a878438070aa8934029059d6866",
+            "reference": "7e7a95d38abf2a878438070aa8934029059d6866",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3"
+        },
+        "suggest": {
+            "ext-event": "For better performance. "
+        },
+        "time": "2022-03-29T14:18:51+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Workerman\\": "./"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "walkor",
+                "email": "walkor@workerman.net",
+                "homepage": "http://www.workerman.net",
+                "role": "Developer"
+            }
+        ],
+        "description": "An asynchronous event driven PHP framework for easily building fast, scalable network applications.",
+        "homepage": "http://www.workerman.net",
+        "keywords": [
+            "asynchronous",
+            "event-loop"
+        ]
     }
 ]

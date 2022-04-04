@@ -1,0 +1,191 @@
+2022-04-04 22:45:44 pid:19110 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 22:46:17 pid:19110 Workerman[websocket.php] stopping ...
+2022-04-04 22:46:17 pid:19110 Workerman[websocket.php] has been stopped
+2022-04-04 22:46:18 pid:19279 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 22:47:48 pid:19279 Workerman[websocket.php] stopping ...
+2022-04-04 22:47:48 pid:19279 Workerman[websocket.php] has been stopped
+2022-04-04 22:47:49 pid:19508 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 22:48:10 pid:19508 Workerman[websocket.php] stopping ...
+2022-04-04 22:48:10 pid:19508 Workerman[websocket.php] has been stopped
+2022-04-04 22:48:10 pid:19571 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 22:49:20 pid:19571 Workerman[websocket.php] stopping ...
+2022-04-04 22:49:20 pid:19571 Workerman[websocket.php] has been stopped
+2022-04-04 22:49:20 pid:19869 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 22:50:29 pid:19869 Workerman[websocket.php] stopping ...
+2022-04-04 22:50:29 pid:19869 Workerman[websocket.php] has been stopped
+2022-04-04 22:50:29 pid:20200 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 22:51:08 pid:20200 Workerman[websocket.php] stopping ...
+2022-04-04 22:51:08 pid:20200 Workerman[websocket.php] has been stopped
+2022-04-04 22:51:08 pid:20379 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 22:51:47 pid:20379 Workerman[websocket.php] stopping ...
+2022-04-04 22:51:47 pid:20379 Workerman[websocket.php] has been stopped
+2022-04-04 22:51:48 pid:20580 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 22:52:01 pid:20580 Workerman[websocket.php] stopping ...
+2022-04-04 22:52:01 pid:20580 Workerman[websocket.php] has been stopped
+2022-04-04 22:52:02 pid:20630 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 22:53:26 pid:20630 Workerman[websocket.php] stopping ...
+2022-04-04 22:53:26 pid:20630 Workerman[websocket.php] has been stopped
+2022-04-04 22:53:27 pid:21062 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 22:55:26 pid:21062 Workerman[websocket.php] stopping ...
+2022-04-04 22:55:26 pid:21062 Workerman[websocket.php] has been stopped
+2022-04-04 22:55:27 pid:21639 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 22:59:59 pid:21639 Workerman[websocket.php] stopping ...
+2022-04-04 22:59:59 pid:21639 Workerman[websocket.php] has been stopped
+2022-04-04 23:00:00 pid:22524 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:00:01 pid:22525 Error: Call to a member function send() on array in /home/komissarov/project/auction/src/admin/server/websocket.php:31
+Stack trace:
+#0 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Connection/TcpConnection.php(638): {closure}()
+#1 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Events/Select.php(295): Workerman\Connection\TcpConnection->baseRead()
+#2 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(2431): Workerman\Events\Select->loop()
+#3 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1555): Workerman\Worker->run()
+#4 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1397): Workerman\Worker::forkOneWorkerForLinux()
+#5 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1371): Workerman\Worker::forkWorkersForLinux()
+#6 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(549): Workerman\Worker::forkWorkers()
+#7 /home/komissarov/project/auction/src/admin/server/websocket.php(60): Workerman\Worker::runAll()
+#8 {main}
+2022-04-04 23:00:01 pid:22524 worker[none:22525] exit with status 64000
+2022-04-04 23:00:23 pid:22524 Workerman[websocket.php] stopping ...
+2022-04-04 23:00:23 pid:22524 Workerman[websocket.php] has been stopped
+2022-04-04 23:00:24 pid:22601 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:00:25 pid:22603 Error: Call to a member function send() on array in /home/komissarov/project/auction/src/admin/server/websocket.php:31
+Stack trace:
+#0 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Connection/TcpConnection.php(638): {closure}()
+#1 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Events/Select.php(295): Workerman\Connection\TcpConnection->baseRead()
+#2 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(2431): Workerman\Events\Select->loop()
+#3 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1555): Workerman\Worker->run()
+#4 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1397): Workerman\Worker::forkOneWorkerForLinux()
+#5 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1371): Workerman\Worker::forkWorkersForLinux()
+#6 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(549): Workerman\Worker::forkWorkers()
+#7 /home/komissarov/project/auction/src/admin/server/websocket.php(60): Workerman\Worker::runAll()
+#8 {main}
+2022-04-04 23:00:25 pid:22601 worker[none:22603] exit with status 64000
+2022-04-04 23:00:57 pid:22601 Workerman[websocket.php] stopping ...
+2022-04-04 23:00:57 pid:22601 Workerman[websocket.php] has been stopped
+2022-04-04 23:00:58 pid:22709 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:00:59 pid:22710 Error: Call to a member function send() on array in /home/komissarov/project/auction/src/admin/server/websocket.php:32
+Stack trace:
+#0 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Connection/TcpConnection.php(638): {closure}()
+#1 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Events/Select.php(295): Workerman\Connection\TcpConnection->baseRead()
+#2 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(2431): Workerman\Events\Select->loop()
+#3 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1555): Workerman\Worker->run()
+#4 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1397): Workerman\Worker::forkOneWorkerForLinux()
+#5 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1371): Workerman\Worker::forkWorkersForLinux()
+#6 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(549): Workerman\Worker::forkWorkers()
+#7 /home/komissarov/project/auction/src/admin/server/websocket.php(61): Workerman\Worker::runAll()
+#8 {main}
+2022-04-04 23:00:59 pid:22709 worker[none:22710] exit with status 64000
+2022-04-04 23:03:16 pid:22709 Workerman[websocket.php] stopping ...
+2022-04-04 23:03:16 pid:22709 Workerman[websocket.php] has been stopped
+2022-04-04 23:03:17 pid:22872 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:03:18 pid:22873 Error: Call to a member function send() on array in /home/komissarov/project/auction/src/admin/server/websocket.php:32
+Stack trace:
+#0 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Connection/TcpConnection.php(638): {closure}()
+#1 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Events/Select.php(295): Workerman\Connection\TcpConnection->baseRead()
+#2 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(2431): Workerman\Events\Select->loop()
+#3 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1555): Workerman\Worker->run()
+#4 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1397): Workerman\Worker::forkOneWorkerForLinux()
+#5 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1371): Workerman\Worker::forkWorkersForLinux()
+#6 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(549): Workerman\Worker::forkWorkers()
+#7 /home/komissarov/project/auction/src/admin/server/websocket.php(61): Workerman\Worker::runAll()
+#8 {main}
+2022-04-04 23:03:18 pid:22872 worker[none:22873] exit with status 64000
+2022-04-04 23:03:28 pid:22882 [HY000] - SQLSTATE[HY000]: General error: 2006 MySQL server has gone away
+trace: #0 /home/komissarov/project/auction/src/admin/server/libs/redbean.php(1175): RedBeanPHP\Driver\RPDO->runQuery()
+#1 /home/komissarov/project/auction/src/admin/server/libs/redbean.php(4309): RedBeanPHP\Driver\RPDO->GetAll()
+#2 /home/komissarov/project/auction/src/admin/server/libs/redbean.php(6546): RedBeanPHP\Adapter\DBAdapter->get()
+#3 /home/komissarov/project/auction/src/admin/server/libs/redbean.php(8383): RedBeanPHP\QueryWriter\AQueryWriter->queryRecord()
+#4 /home/komissarov/project/auction/src/admin/server/libs/redbean.php(9508): RedBeanPHP\Repository->find()
+#5 /home/komissarov/project/auction/src/admin/server/libs/redbean.php(10137): RedBeanPHP\OODB->find()
+#6 /home/komissarov/project/auction/src/admin/server/libs/redbean.php(10182): RedBeanPHP\Finder->find()
+#7 /home/komissarov/project/auction/src/admin/server/libs/redbean.php(12825): RedBeanPHP\Finder->findOne()
+#8 /home/komissarov/project/auction/src/admin/server/websocket.php(16): RedBeanPHP\Facade::findOne()
+#9 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Protocols/Websocket.php(404): {closure}()
+#10 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Protocols/Websocket.php(57): Workerman\Protocols\Websocket::dealHandshake()
+#11 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Connection/TcpConnection.php(601): Workerman\Protocols\Websocket::input()
+#12 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Events/Select.php(295): Workerman\Connection\TcpConnection->baseRead()
+#13 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(2431): Workerman\Events\Select->loop()
+#14 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1555): Workerman\Worker->run()
+#15 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1397): Workerman\Worker::forkOneWorkerForLinux()
+#16 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1371): Workerman\Worker::forkWorkersForLinux()
+#17 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1692): Workerman\Worker::forkWorkers()
+#18 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(1641): Workerman\Worker::monitorWorkersForLinux()
+#19 /home/komissarov/project/auction/src/admin/server/libs/vendor/workerman/workerman/Worker.php(551): Workerman\Worker::monitorWorkers()
+#20 /home/komissarov/project/auction/src/admin/server/websocket.php(61): Workerman\Worker::runAll()
+#21 {main}
+2022-04-04 23:03:28 pid:22872 worker[none:22882] exit with status 64000
+2022-04-04 23:03:29 pid:22872 Workerman[websocket.php] stopping ...
+2022-04-04 23:03:29 pid:22872 Workerman[websocket.php] has been stopped
+2022-04-04 23:03:30 pid:22917 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:04:24 pid:22917 Workerman[websocket.php] stopping ...
+2022-04-04 23:04:24 pid:22917 Workerman[websocket.php] has been stopped
+2022-04-04 23:04:25 pid:23094 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:04:45 pid:23094 Workerman[websocket.php] stopping ...
+2022-04-04 23:04:45 pid:23094 Workerman[websocket.php] has been stopped
+2022-04-04 23:04:46 pid:23160 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:05:24 pid:23160 Workerman[websocket.php] stopping ...
+2022-04-04 23:05:24 pid:23160 Workerman[websocket.php] has been stopped
+2022-04-04 23:05:25 pid:23291 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:06:11 pid:23291 Workerman[websocket.php] stopping ...
+2022-04-04 23:06:11 pid:23291 Workerman[websocket.php] has been stopped
+2022-04-04 23:06:12 pid:23416 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:08:00 pid:23416 Workerman[websocket.php] stopping ...
+2022-04-04 23:08:00 pid:23416 Workerman[websocket.php] has been stopped
+2022-04-04 23:08:17 pid:23999 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:08:36 pid:24001 Workerman[websocket.php] stop 
+2022-04-04 23:08:36 pid:24001 Workerman[websocket.php] not run
+2022-04-04 23:08:37 pid:24002 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:08:58 pid:24016 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:11:29 pid:24016 Workerman[websocket.php] stopping ...
+2022-04-04 23:11:29 pid:24016 Workerman[websocket.php] has been stopped
+2022-04-04 23:11:29 pid:24769 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:12:32 pid:24769 Workerman[websocket.php] stopping ...
+2022-04-04 23:12:32 pid:24769 Workerman[websocket.php] has been stopped
+2022-04-04 23:12:33 pid:24957 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:13:24 pid:24957 Workerman[websocket.php] stopping ...
+2022-04-04 23:13:24 pid:24957 Workerman[websocket.php] has been stopped
+2022-04-04 23:13:26 pid:25109 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:14:49 pid:25109 Workerman[websocket.php] stopping ...
+2022-04-04 23:14:49 pid:25109 Workerman[websocket.php] has been stopped
+2022-04-04 23:14:50 pid:25327 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:15:01 pid:25327 Workerman[websocket.php] stopping ...
+2022-04-04 23:15:01 pid:25327 Workerman[websocket.php] has been stopped
+2022-04-04 23:15:01 pid:25364 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:15:18 pid:25364 Workerman[websocket.php] stopping ...
+2022-04-04 23:15:18 pid:25364 Workerman[websocket.php] has been stopped
+2022-04-04 23:15:19 pid:25400 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:15:39 pid:25400 Workerman[websocket.php] stopping ...
+2022-04-04 23:15:39 pid:25400 Workerman[websocket.php] has been stopped
+2022-04-04 23:15:39 pid:25457 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:21:44 pid:25457 Workerman[websocket.php] stopping ...
+2022-04-04 23:21:44 pid:25457 Workerman[websocket.php] has been stopped
+2022-04-04 23:21:45 pid:25735 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:22:13 pid:25735 Workerman[websocket.php] stopping ...
+2022-04-04 23:22:13 pid:25735 Workerman[websocket.php] has been stopped
+2022-04-04 23:22:14 pid:25817 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:27:19 pid:25817 Workerman[websocket.php] stopping ...
+2022-04-04 23:27:19 pid:25817 Workerman[websocket.php] has been stopped
+2022-04-04 23:27:20 pid:26113 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:27:35 pid:26113 Workerman[websocket.php] stopping ...
+2022-04-04 23:27:35 pid:26113 Workerman[websocket.php] has been stopped
+2022-04-04 23:27:39 pid:26176 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:27:53 pid:26176 Workerman[websocket.php] stopping ...
+2022-04-04 23:27:53 pid:26176 Workerman[websocket.php] has been stopped
+2022-04-04 23:27:54 pid:26240 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:28:27 pid:26240 Workerman[websocket.php] stopping ...
+2022-04-04 23:28:27 pid:26240 Workerman[websocket.php] has been stopped
+2022-04-04 23:28:28 pid:26369 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:56:52 pid:26369 Workerman[websocket.php] stopping ...
+2022-04-04 23:56:52 pid:26369 Workerman[websocket.php] has been stopped
+2022-04-04 23:56:52 pid:27968 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:57:39 pid:27968 Workerman[websocket.php] stopping ...
+2022-04-04 23:57:39 pid:27968 Workerman[websocket.php] has been stopped
+2022-04-04 23:57:40 pid:28132 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:58:02 pid:28132 Workerman[websocket.php] stopping ...
+2022-04-04 23:58:02 pid:28132 Workerman[websocket.php] has been stopped
+2022-04-04 23:58:02 pid:28171 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:58:55 pid:28171 Workerman[websocket.php] stopping ...
+2022-04-04 23:58:55 pid:28171 Workerman[websocket.php] has been stopped
+2022-04-04 23:58:56 pid:28349 Workerman[websocket.php] start in DEBUG mode
+2022-04-04 23:59:53 pid:28349 Workerman[websocket.php] stopping ...
+2022-04-04 23:59:53 pid:28349 Workerman[websocket.php] has been stopped
+2022-04-05 00:00:03 pid:28655 Workerman[websocket.php] start in DEBUG mode

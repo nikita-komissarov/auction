@@ -1,5 +1,6 @@
 {
     "require": {
-        "hflabs/dadata": "^22.3"
+        "hflabs/dadata": "^22.3",
+        "workerman/workerman": "^4.0"
     }
 }
