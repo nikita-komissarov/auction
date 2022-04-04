@@ -27,6 +27,7 @@ var routes = [
   },
   {
     path: '/stock/item/:id/',
+    name: 'stock-item',
     async: function ({ router, to, resolve }) {
       // App instance
       var app = router.app;
