@@ -27,6 +27,13 @@ var app = new Framework7({
   },
 });
 
+var scannerFocusEl = null;
+$(document).keydown(function(event) {
+  if(event.which == 113) {
+    $(scannerFocusEl[scannerFocusEl.length - 1]).val('').focus();
+  }
+});
+
 function getVal(input){
   if(!$(input).val()) return null;
   return $(input).val().trim();
