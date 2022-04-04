@@ -99,7 +99,7 @@
         </div>
       </div>
     </div>
-    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/stock/search/"></div>
+    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/stock/item/2/"></div>
     <?php else : ?>
     <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/auth/"></div>
     <?php endif; ?>
