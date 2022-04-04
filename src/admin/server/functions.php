@@ -15,4 +15,11 @@
 		return $admin;
 	}
 
+	function sendSocket($data, $ip = 'localhost', $port = '7778'){
+		$instance = stream_socket_client('tcp://'.$ip.':'.$port);
+		fwrite($instance, json_encode($data));
+	}
+
+	
+
 ?>
