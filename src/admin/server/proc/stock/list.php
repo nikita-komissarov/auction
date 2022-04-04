@@ -9,12 +9,13 @@
 
   foreach($items as $key => $item) {
     $results[] = [
-      'id' => $item->id,
+      'id' => (int)$item->id,
       'name' => $item->name,
       'article' => $item->article,
-      'price' => $item->price,
+      'price' => (float)$item->price,
+      'count' => (int)R::getCol('SELECT SUM(`count`) FROM `stock__items` WHERE `item_id` = '.$item->id)[0] ?: 0,
       'category' => [
-        'id' => $item->category_id,
+        'id' => (int)$item->category_id,
         'name' => $categories[$item->category_id]->name,
       ],
     ];
