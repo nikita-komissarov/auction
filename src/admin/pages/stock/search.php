@@ -9,7 +9,7 @@
             class="searchbar searchbar-init">
             <div class="searchbar-inner">
               <div class="searchbar-input-wrap">
-                <input type="search" placeholder="Поиск по названию или артикулу" />
+                <input class="scanner-input-${scannerId}" type="search" placeholder="Поиск по названию или артикулу" />
                 <i class="searchbar-icon"></i>
                 <span class="input-clear-button"></span>
               </div>
@@ -31,9 +31,13 @@
   </div>
 </template>
 <script>
-  export default (props, { $f7, $el, $theme, $on }) => {
+  export default (props, { $f7, $el, $theme, $on, $update }) => {
 
-    $on('pageInit', () => {
+    var scannerId = app.utils.id();
+    $on('pageInit', (e, page) => { 
+
+      scannerFocusEl = $(document).find('.scanner-input-' + scannerId);
+
       $f7.request({
         url: '/server/proc/stock/list.php',
         method: 'GET',
@@ -61,7 +65,7 @@
               console.log("item", item);
               return `
               <li>
-                <a href="#" class="item-link item-content">
+                <a href="/stock/item/${item.id}/" class="item-link item-content">
                   <div class="item-media"><img src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg"
                       width="80" /></div>
                   <div class="item-inner">
@@ -69,7 +73,7 @@
                       <div class="item-title">${item.name}</div>
                       <div class="item-after">${item.price} руб</div>
                     </div>
-                    <div class="item-subtitle">Арт. ${item.article}</div>
+                    <div class="item-subtitle">${item.article}</div>
                     <div class="item-text">${item.category.name}<br>Всего 7 штук</div>
                   </div>
                 </a>
@@ -78,8 +82,6 @@
             // Item height
             height: 106.8,
           });
-
-console.log("virtualList", virtualList);
         },
         error: function (data) {
         }
