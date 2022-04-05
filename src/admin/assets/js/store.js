@@ -1,24 +1,45 @@
 var store = Framework7.createStore({
   state: {
-    firstName: 'John',
-    lastName: 'Doe',
-    users: null,
-    usersLoading: false,
+    items: [],
+    stocks: [],
   },
   actions: {
-    helloWorld(ctx) {
-      app.dialog.alert('Hello world');
+    loadStocks({ state }) {
+      fetch('/server/proc/stock/list.php')
+      .then((res) => res.json())
+      .then((stocks) => {
+        state.stocks = stocks;
+      });
     },
-    loadUsers({ state }) {
-      state.usersLoading = true;
-      setTimeout(() => {
-        state.usersLoading = false;
-        state.users = ['Aaron', 'Alexander', 'Candy', 'Chloe', 'Vladimir'];
-      }, 3000);
+    loadItems({ state }) {
+      fetch('/server/proc/stock/items.php')
+      .then((res) => res.json())
+      .then((items) => {
+        state.items = items;
+      });
+    },
+    reloadItem({ state }, { item_id }) {
+      fetch('/server/proc/stock/items.php?id=' + item_id)
+      .then((res) => res.json())
+      .then((item) => {
+        //Записываем текущий массив временно
+        let tmpItems = state.items;
+        //Заменяем найдя нужный индекс на данные пришедшие от сервера
+        tmpItems[tmpItems.findIndex(el => el.id == item_id)] = item[0];
+        //Вписываем отредактированный массив назад для поддержки реактивности
+        state.items = tmpItems;
+      });
     },
   },
   getters: {
-    usersLoading: ({ state }) => state.usersLoading,
-    users: ({ state }) => state.users,
+    stocks({ state }) {
+      return state.stocks;
+    },
+    items({ state }) {
+      return state.items;
+    },
   },
 });
+
+store.dispatch('loadStocks');
+store.dispatch('loadItems');

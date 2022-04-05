@@ -40,8 +40,10 @@ window.onload = function () {
   ws.onmessage = function(message) {
     let data = JSON.parse(JSON.parse(message.data.trim()));
     console.log("data", data);
-    if(data.cmd = 'change stock count'){
-      $(document).find('#stocks-item-' + data.item_id).find('#stock-' + data.stock_id).find('.stock-count').val(data.count);
+    if(data.cmd = 'change item') {
+      return store.dispatch('reloadItem', {
+        item_id: data.item_id,
+      });
     }
   };
 };

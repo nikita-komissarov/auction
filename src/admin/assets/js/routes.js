@@ -27,34 +27,7 @@ var routes = [
   },
   {
     path: '/stock/item/:id/',
-    name: 'stock-item',
-    async: function ({ router, to, resolve }) {
-      // App instance
-      var app = router.app;
-      // Show Preloader
-      app.preloader.show();
-      // Simulate Ajax Request
-      app.request({
-        url: '/server/proc/stock/item.php',
-        method: 'POST',
-        dataType: 'json',
-        data: {
-          id: to.params.id
-        },
-        success: function (item) {
-          app.preloader.hide();
-          resolve({
-              componentUrl: './pages/stock/item.php',
-            },
-            {
-              props: {
-                item: item,
-              }
-            }
-          );
-        },
-      });
-    },
+    componentUrl: './pages/stock/item.php',
   },
   // Default route (404 page). MUST BE THE LAST
   {
