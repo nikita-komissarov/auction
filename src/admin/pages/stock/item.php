@@ -10,6 +10,11 @@
           </a>
         </div>
         <div class="title">Товар #${props.id}</div>
+        <div class="right">
+          <a href="#" class="link"><i class="f7-icons">pencil_circle</i></a>
+          <a href="#" class="link"><i class="f7-icons">shippingbox</i></a>
+          <a href="#" class="link"><i class="f7-icons">cart_badge_plus</i></a>
+        </div>
       </div>
     </div>
     <div class="searchbar-backdrop"></div>
@@ -21,7 +26,7 @@
             <div class="item-inner">
               <div class="item-title">
                 <div class="item-header">Артикул</div>
-                ${props.item.info.article}
+                ${items.value[item_id].info.article}
               </div>
             </div>
           </li>
@@ -29,7 +34,7 @@
             <div class="item-inner">
               <div class="item-title">
                 <div class="item-header">Название</div>
-                ${props.item.info.name}
+                ${items.value[item_id].info.name}
               </div>
             </div>
           </li>
@@ -37,12 +42,12 @@
             <div class="item-inner">
               <div class="item-title">
                 <div class="item-header">Стоимость выкупа и продажи в розницу</div>
-                ${props.item.info.price} руб
+                ${items.value[item_id].info.price} руб
               </div>
             </div>
           </li>
           <li>
-            <a href="${props.item.info.market}" class="item-link item-content">
+            <a href="${items.value[item_id].info.market}" class="item-link item-content">
               <div class="item-inner">
                 <div class="item-title">
                   Ссылка на страницу из магазина
@@ -54,17 +59,40 @@
             <div class="item-inner">
               <div class="item-title">
                 <div class="item-header">Категория</div>
-                ${props.item.info.category.name}
+                ${items.value[item_id].info.category.name}
               </div>
             </div>
           </li>
         </ul>
       </div>
       <div class="block-title">Описание</div>
-      <div class="block block-strong inset" id="item-description"></div>
+      <div class="block block-strong inset">
+        ${items.value[item_id].info.description}
+      </div>
       <div class="block-title">Наличие на складах</div>
       <div class="list inset">
-        <ul id="stocks-item-${props.id}"></ul>
+        <ul id="stocks">
+          ${stocks.value.map((stock) => $h`
+          <li id="stock-${stock.id}" data-id="${stock.id}" class="item-content">
+            <div class="item-inner">
+              <div class="item-title">
+                <div class="item-header">${stock.name}</div>
+                <a href="#" data-id="${stock.id}" class="stock-rack">${items.value[item_id].stock[stock.id].rack}</a> <b>-</b> <a href="#" data-id="${stock.id}" class="stock-cell">${items.value[item_id].stock[stock.id].cell}</a>
+                <div class="item-footer">${stock.address}</div>
+              </div>
+              <div class="item-after">
+                <div class="stepper stepper-init">
+                  <div data-val="-1" class="stock-count-btn stepper-button-minus"></div>
+                  <div class="stepper-input-wrap">
+                    <input class="stock-count" type="text" value="${items.value[item_id].stock[stock.id].count}" min="0" step="1" readonly />
+                  </div>
+                  <div data-val="1" class="stock-count-btn stepper-button-plus"></div>
+                </div>
+              </div>
+            </div>
+          </li>
+          `)}
+        </ul>
       </div>
     </div>
   </div>
@@ -75,37 +103,18 @@
   }
 </style>
 <script>
-  export default (props, {$f7, $el, $theme, $on, $update }) => {
+  export default (props, { $store, $f7, $el, $theme, $on, $update }) => {
+    var stocks = $store.getters.stocks;
+    var items = $store.getters.items;
+    var item_id = items.value.findIndex(el => el.id == props.id);
+    //
+
     console.log("props", props);
+    console.log("stocks", stocks);
+    console.log("items", items);
+    console.log("item_id", item_id);
 
     $on('pageInit', (e, page) => { 
-
-      $(page.el).find('#item-description').html(props.item.info.description);
-
-
-      //stock
-      props.item.stocks.forEach((stock) => {
-        $(page.el).find('#stocks-item-' + props.id).append(`
-<li id="stock-${stock.id}" data-id="${stock.id}" class="item-content">
-  <div class="item-inner">
-    <div class="item-title">
-      <div class="item-header">${stock.name}</div>
-      <a href="#" data-id="${stock.id}" class="stock-rack">${stock.rack}</a> <b>-</b> <a href="#" data-id="${stock.id}" class="stock-cell">${stock.cell}</a>
-      <div class="item-footer">${stock.address}</div>
-    </div>
-    <div class="item-after">
-      <div class="stepper stepper-init">
-        <div data-val="-1" class="stock-count-btn stepper-button-minus"></div>
-        <div class="stepper-input-wrap">
-          <input class="stock-count" type="text" value="${stock.count}" min="0" step="1" readonly />
-        </div>
-        <div data-val="1" class="stock-count-btn stepper-button-plus"></div>
-      </div>
-    </div>
-  </div>
-</li>
-        `);
-      });
 
       $(page.el).find('.stock-count-btn').on('click', function() {
         let li = $(this).closest('li');
@@ -126,6 +135,9 @@
           },
           success: function (data) {
             $f7.dialog.close();
+            if(data != (count + val)) {
+              $f7.dialog.alert('<b>Внимание!</b> Кто-то параллельно с Вами изменяет количество этого товара на этом же складе');
+            }
             $(li).find('.stock-count').val(data);
             $(li).find('.stock-count-btn').removeClass('disabled');
           },
@@ -182,7 +194,7 @@
           },
           function () {},
           $(stock).find('.stock-rack').html(),
-        );
+          );
       });
 
       $(page.el).find('.stock-cell').on('click', function(event) {
@@ -204,7 +216,7 @@
           },
           function () {},
           +$(stock).find('.stock-cell').html(),
-        );
+          );
       });
     });
 
