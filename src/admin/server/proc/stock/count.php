@@ -30,10 +30,8 @@
   R::store($stock_item);
 
   sendSocket([
-    'cmd' => 'change stock count',
+    'cmd' => 'change item',
     'item_id' => +$_POST['item'],
-    'stock_id' => +$_POST['stock'],
-    'count' => +$stock_item->count,
   ]);
   exit(json_encode($stock_item->count));
 
