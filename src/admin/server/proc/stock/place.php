@@ -29,6 +29,10 @@
 
   R::store($stock_item);
 
+  sendSocket([
+    'cmd' => 'change item',
+    'item_id' => +$_POST['item'],
+  ]);
   exit(json_encode('ok'));
 
 ?>
