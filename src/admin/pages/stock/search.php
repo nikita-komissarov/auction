@@ -2,11 +2,10 @@
   <div class="page">
     <div class="navbar">
       <div class="navbar-bg"></div>
-      <div class="navbar-inner sliding">
+      <div class="navbar-inner">
         <div class="title">Поиск товара</div>
         <div class="subnavbar">
-          <form data-search-container=".virtual-list" data-search-item="li" data-search-in=".item-title"
-            class="searchbar searchbar-init">
+          <form class="searchbar">
             <div class="searchbar-inner">
               <div class="searchbar-input-wrap">
                 <input class="scanner-input-${scannerId}" type="search" placeholder="Поиск по названию или артикулу" />
@@ -19,74 +18,53 @@
         </div>
       </div>
     </div>
-    <div class="searchbar-backdrop"></div>
     <div class="page-content">
-      <div class="list simple-list searchbar-not-found">
+      <div class="searchbar-backdrop"></div>
+      <div class="list stock-search-list media-list searchbar-found">
         <ul>
-          <li>Совпадений не найдено</li>
+        ${items.value.map((item) => $h`
+          <li>
+            <a href="/stock/item/${item.id}/" class="item-link item-content">
+              <div class="item-media"><img src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg"
+                  width="80" /></div>
+              <div class="item-inner">
+                <div class="item-title-row">
+                  <div class="item-title">${item.info.name}</div>
+                  <div class="item-after">${item.info.price} руб</div>
+                </div>
+                <div class="item-subtitle">${item.info.article}</div>
+                <div class="item-text">${item.info.category.name}<br />0 шт</div>
+              </div>
+            </a>
+          </li>
+        `)}
         </ul>
       </div>
-      <div class="list virtual-list media-list searchbar-found"></div>
+      <div class="block searchbar-not-found">
+        <div class="block-inner">Nothing found</div>
+      </div>
     </div>
   </div>
 </template>
 <script>
-  export default (props, { $f7, $el, $theme, $on, $update }) => {
-
+  export default (props, { $store, $f7, $on }) => {
+    var items = $store.getters.items;
     var scannerId = app.utils.id();
-    $on('pageInit', (e, page) => { 
 
+    $on('pageInit', () => {
       scannerFocusEl = $(document).find('.scanner-input-' + scannerId);
-
-      $f7.request({
-        url: '/server/proc/stock/list.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function (items) {
-          console.log("items", items);
-          const virtualList = $f7.virtualList.create({
-            // List Element
-            el: $el.value.find('.virtual-list'),
-            // Pass array with items
-            items,
-            // Custom search function for searchbar
-            searchAll: function (query, items) {
-              var found = [];
-              for (var i = 0; i < items.length; i++) {
-                if(items[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
-                if(items[i].article.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
-                //if(items[i].category.name.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
-                //if(items[i].price.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
-              }
-              return found; //return array with mathced indexes
-            },
-            // List item render
-            renderItem(item) {
-              console.log("item", item);
-              return `
-              <li>
-                <a href="/stock/item/${item.id}/" class="item-link item-content">
-                  <div class="item-media"><img src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg"
-                      width="80" /></div>
-                  <div class="item-inner">
-                    <div class="item-title-row">
-                      <div class="item-title">${item.name}</div>
-                      <div class="item-after">${item.price} руб</div>
-                    </div>
-                    <div class="item-subtitle">${item.article}</div>
-                    <div class="item-text">${item.category.name}<br>${item.count} шт</div>
-                  </div>
-                </a>
-              </li>`;
-            },
-            // Item height
-            height: 106.8,
-          });
-        },
-        error: function (data) {
+      // create searchbar
+      var searchbar = $f7.searchbar.create({
+        el: '.searchbar',
+        searchContainer: '.stock-search-list',
+        searchIn: '.item-title, .item-subtitle',
+        on: {
+          search(sb, query, previousQuery) {
+            console.log(query, previousQuery);
+          }
         }
       });
-    });
+    })
 
     return $render;
   }
