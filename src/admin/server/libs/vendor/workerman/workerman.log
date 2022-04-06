@@ -199,3 +199,6 @@ trace: #0 /home/komissarov/project/auction/src/admin/server/libs/redbean.php(117
 2022-04-05 19:24:07 pid:22191 Workerman[websocket.php] stopping ...
 2022-04-05 19:24:07 pid:22191 Workerman[websocket.php] has been stopped
 2022-04-05 19:24:08 pid:6875 Workerman[websocket.php] start in DEBUG mode
+2022-04-05 21:49:02 pid:6875 Workerman[websocket.php] stopping ...
+2022-04-05 21:49:02 pid:6875 Workerman[websocket.php] has been stopped
+2022-04-06 15:37:41 pid:5545 Workerman[websocket.php] start in DEBUG mode
