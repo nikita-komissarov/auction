@@ -94,6 +94,11 @@
           `)}
         </ul>
       </div>
+      <div class="list inset">
+        <ul>
+          <li><a class="list-button" href="/stock/item/media/${props.id}/">Добавить товар</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -114,7 +119,7 @@
     console.log("items", items);
     console.log("item_id", item_id);
 
-    $on('pageInit', (e, page) => { 
+    $on('pageInit', (e, page) => {
 
       $(page.el).find('.stock-count-btn').on('click', function() {
         let li = $(this).closest('li');

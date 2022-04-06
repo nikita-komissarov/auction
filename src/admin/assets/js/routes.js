@@ -29,6 +29,10 @@ var routes = [
     path: '/stock/item/:id/',
     componentUrl: './pages/stock/item.php',
   },
+  {
+    path: '/stock/item/media/:id/',
+    componentUrl: './pages/stock/media.php',
+  },
   // Default route (404 page). MUST BE THE LAST
   {
     path: '(.*)',
