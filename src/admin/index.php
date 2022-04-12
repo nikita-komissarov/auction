@@ -105,6 +105,7 @@
     <?php endif; ?>
   </div>
   <script src="/assets/js/core.js"></script>
+  <script src="/assets/js/moment.js"></script>
   <script src="/assets/js/routes.js"></script>
   <script src="/assets/js/store.js"></script>
   <script src="/assets/js/app.js"></script>

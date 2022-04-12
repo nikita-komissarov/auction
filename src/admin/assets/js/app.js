@@ -79,60 +79,36 @@ function createMediaInit(el){
   let block = $(`<div class="list media-list inset sortable sort-media" id="media-input-div-${id}"><ul></ul></div>`);
   $(el).append(block);
   app.sortable.enable(`#media-input-div-${id}`);
+
+  $(`#media-input-div-${id}`).on('sortable:sort', function (listEl, move) {
+    [
+      mediaInput[id][move.to],
+      mediaInput[id][move.from]
+    ] = [
+      mediaInput[id][move.from],
+      mediaInput[id][move.to]
+    ];
+    console.log("mediaInput", mediaInput[id]);
+  });
   createMediaInput(block, id);
 
   return id;
 }
 
-function createMediaGetList(id){
-  console.log("id", id);
-  let el = $(document).find(`#media-input-div-${id}`);
-  let list_li = $(el).find('li');
-  let list_files = new Array();
-  list_li.forEach((li, index) => {
-    if(mediaInput[id][$(li).attr('data-id')] != null){
-      list_files.push({
-        id: $(li).attr('data-id'),
-        file: mediaInput[id][$(li).attr('data-id')]
-      });
-    }
-  });
-
-  return list_files;
-}
-
-function createMediaInput(el, block_id){
-  if(Object.keys(mediaInput[block_id]).length >= 5) return true;
-  let id = app.utils.id();
-  mediaInput[block_id][id] = null;
-  let li = $(`
-    <li id="media-input-${id}" data-id="${id}">
-      <a href="#" class="item-link item-content media-upload-btn">
-        <div class="item-media"><img src="/assets/img/aperture.png"
-            width="50" /></div>
-        <div class="item-inner">
-          <div class="item-title-row">
-            <div class="item-title">Добавить фотографию</div>
-          </div>
-          <div class="item-text">Нажмите чтобы выбрать файл</div>
-        </div>
-      </a>
-      <div class="sortable-handler" style="display: none;"></div>
-      <input type="file" hidden class="media-upload-input"/>
-    </li>
-  `);
-  $(el).find('ul').append(li);
-
+function createMediaInputInitEvents(el, block_id, id, li){
   $(li).find('a').off('click');
   $(li).find('a').on('click', function(e) {
     e.preventDefault();
-    if(mediaInput[block_id][id] == null) {
+    if(!$(li).hasClass('selected')) {
       return $(li).find('input').click();
     }
     else app.dialog.create({
       title: 'Что сделать с файлом?',
       text: 'Выберите действие',
       buttons: [
+        {
+          text: 'Отменить',
+        },
         {
           text: 'Изменить',
           onClick: function(dialog, e) {
@@ -144,6 +120,9 @@ function createMediaInput(el, block_id){
           color: 'red',
           onClick: function(dialog, e) {
             delete mediaInput[block_id][id];
+            console.log("mediaInput[block_id]", mediaInput[block_id]);
+            mediaInput[block_id] = mediaInput[block_id].filter((_, index) => mediaInput[block_id].hasOwnProperty(index));
+            console.log("mediaInput[block_id]", mediaInput[block_id]);
             $(li).remove();
             if($(el).find('li').length == $(el).find('.selected').length) {
               createMediaInput(el, block_id);
@@ -164,13 +143,81 @@ function createMediaInput(el, block_id){
       $(li).find('img').attr('src', e.target.result);
     }
     reader.readAsDataURL(file);
+    mediaInput[block_id][id] = file;
 
     if(!$(li).hasClass('selected')) createMediaInput(el, block_id);
+    $(li).removeClass('no-sorting');
     $(li).addClass('selected');
     $(li).find('.sortable-handler').css('display', null);
     $(li).find('.item-title').html(file.name);
     $(li).find('.item-text').html((file.size / (1024*1024)).toFixed(2) + 'MB, ' + file.type);
-
-    mediaInput[block_id][id] = file;
   });
+}
+
+function createMediaGetList(id){
+  console.log("id", id);
+  let el = $(document).find(`#media-input-div-${id}`);
+  let list_li = $(el).find('li');
+  let list_files = new Array();
+  list_li.forEach((li, index) => {
+    if(mediaInput[id][$(li).attr('data-id')] != null){
+      list_files.push({
+        id: $(li).attr('data-id'),
+        file: mediaInput[id][$(li).attr('data-id')]
+      });
+    }
+  });
+
+  return mediaInput[id];
+}
+
+function dataURLtoFile(dataurl, filename) {
+  var arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]), 
+      n = bstr.length, 
+      u8arr = new Uint8Array(n);
+      
+  while(n--){
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, {type:mime});
+}
+    
+
+function createMediaInsertItem(block_id, data, filename = null){
+  let file = dataURLtoFile(data, filename);
+
+  let dt  = new DataTransfer();
+  dt.items.add(file);
+
+  let input = $(`#media-input-div-${block_id}`).find('.no-sorting').find('input');
+  $(input).prop('files', dt.files).trigger('change');
+  return true;
+}
+
+function createMediaInput(el, block_id){
+  if(Object.keys(mediaInput[block_id]).length >= 5) return true;
+  let id = mediaInput[block_id].push(null) - 1;
+  console.log("mediaInput", mediaInput[block_id]);
+  let li = $(`
+    <li id="media-input-${id}" data-id="${id}" class="no-sorting">
+      <a href="#" class="item-link item-content media-upload-btn">
+        <div class="item-media"><img src="/assets/img/aperture.png"
+            width="50" /></div>
+        <div class="item-inner">
+          <div class="item-title-row">
+            <div class="item-title">Добавить фотографию</div>
+          </div>
+          <div class="item-text">Нажмите чтобы выбрать файл</div>
+        </div>
+      </a>
+      <div class="sortable-handler" style="display: none;"></div>
+      <input type="file" hidden class="media-upload-input"/>
+    </li>
+  `);
+  $(el).find('ul').append(li);
+
+  createMediaInputInitEvents(el, block_id, id, li);
+  return true;
 }

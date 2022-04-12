@@ -20,6 +20,17 @@
   define('DB_TABLE', 'auction');
   define('DB_USER', 'auction');
   define('DB_PASS', 'fb8fcddc705541ff89c66ed031bcf90b');
-
+  //Yandex.Cloud Storage
+  define('YANDEX_CLOUD_STORAGE_BUCKET', 'auction.dev');
+  define('YANDEX_CLOUD_STORAGE', [
+    'credentials' => [
+      'key'      => 'YCAJEJdTBUEsWaXYotl5B3K47',
+      'secret'   => 'YCPUrPMeWzEuzNr4toHNRWgGFG3Bdrrs53EV6GJ7',
+    ],
+    'endpoint' => 'https://storage.yandexcloud.net',
+    'region'   => 'ru-central1',
+    'version'  => 'latest',
+  ]);
+  //DaData
   define('DADATA_TOKEN', '8ee449e223f617af130729df70868292783a7c56');
   define('DADATA_SECRET', 'b4cae5a1cb7205bb8927939bd65bc7ca9dc880ca');

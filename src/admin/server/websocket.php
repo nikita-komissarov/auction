@@ -56,7 +56,7 @@ function searchConnect($users, $needle){
 $ws_worker->onClose = function($connection) use (&$connections)
 {
   $admin = searchConnect($connections, $connection);
-  unset($consultants[$admin->id][$admin->connect]);
+  unset($connections[$admin->id][$admin->connect]);
 };
 
 // Run worker

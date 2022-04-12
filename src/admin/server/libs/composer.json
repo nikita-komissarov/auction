@@ -1,6 +1,8 @@
 {
     "require": {
         "hflabs/dadata": "^22.3",
-        "workerman/workerman": "^4.0"
+        "workerman/workerman": "^4.0",
+        "aws/aws-sdk-php": "^3.218",
+        "php-ffmpeg/php-ffmpeg": "^0.19.0"
     }
 }

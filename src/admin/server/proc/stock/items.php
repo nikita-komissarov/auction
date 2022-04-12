@@ -2,7 +2,8 @@
   require_once $_SERVER['DOCUMENT_ROOT'].'/server/server.php';
 
   //if(!$admin) exit();
-
+  // rtsp://192.168.1.136/:554/user=admin&password=&channel=1&stream=0?.sdp
+  
   if(isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])){
     $items = [R::findOne('items', 'id = ?', [$_GET['id']])];
     $categories = R::findAll('items__categories');
@@ -36,7 +37,7 @@
           'id' => (int)$item->category_id,
           'name' => $categories[$item->category_id]->name,
         ],
-        'media' => $item->media,
+        'media' => ($item->media ? json_decode($item->media) : []),
         'market' => $item->market,
         'description' => $item->description,
       ],
