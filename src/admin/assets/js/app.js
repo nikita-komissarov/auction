@@ -213,7 +213,7 @@ function createMediaInput(el, block_id){
         </div>
       </a>
       <div class="sortable-handler" style="display: none;"></div>
-      <input type="file" hidden class="media-upload-input"/>
+      <input type="file" hidden class="media-upload-input" accept="image/png, image/jpeg"/>
     </li>
   `);
   $(el).find('ul').append(li);

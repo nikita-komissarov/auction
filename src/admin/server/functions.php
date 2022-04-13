@@ -42,7 +42,7 @@
     $s3Client = $sdk->createS3();
 
     $ext = mime2ext(mime_content_type($file));
-    $time = ($filename != null ? $filename : (int)str_replace('.','',microtime(true)));
+    $time = ($filename !== null ? $filename : (int)str_replace('.','',microtime(true)));
     $temp = $_SERVER['DOCUMENT_ROOT'].'/server/temp/'.$time;
     $dir .= $time.'.'.$ext;
 
