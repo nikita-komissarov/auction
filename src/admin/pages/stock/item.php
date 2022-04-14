@@ -10,11 +10,6 @@
           </a>
         </div>
         <div class="title">Товар #${props.id}</div>
-        <div class="right">
-          <a href="#" class="link"><i class="f7-icons">pencil_circle</i></a>
-          <a href="#" class="link"><i class="f7-icons">shippingbox</i></a>
-          <a href="#" class="link"><i class="f7-icons">cart_badge_plus</i></a>
-        </div>
       </div>
     </div>
     <div class="searchbar-backdrop"></div>
@@ -42,7 +37,7 @@
             <div class="item-inner">
               <div class="item-title">
                 <div class="item-header">Стоимость выкупа и продажи в розницу</div>
-                ${items.value[item_id].info.price} руб
+                ${bitsOfNum(items.value[item_id].info.price, 2)} руб
               </div>
             </div>
           </li>
@@ -65,9 +60,11 @@
           </li>
         </ul>
       </div>
-      <div class="block-title">Описание</div>
-      <div class="block block-strong inset">
-        ${items.value[item_id].info.description}
+      <div class="list inset">
+        <ul>
+          <li><a class="list-button" href="/stock/item/media/${props.id}/">Добавить в корзину</a></li>
+          <li><a class="list-button" href="/stock/item/media/${props.id}/">Выставить на аукцион</a></li>
+        </ul>
       </div>
       <div class="block-title">Наличие на складах</div>
       <div class="list inset">
@@ -94,9 +91,39 @@
           `)}
         </ul>
       </div>
+      <div class="block-title">Фотографии и описание</div>
+      <div class="block block-strong inset">
+        ${items.value[item_id].info.media[0] && $h `
+        <div class="row align-items-center">
+          <div class="col-100 small-20">
+            <img class="photo" data-id="0" src="${items.value[item_id].info.media[0]}" />
+          </div>
+          <div class="col-20 small-20">
+            <img class="photo" data-id="1" src="${items.value[item_id].info.media[1]}" />
+          </div>
+          <div class="col-20 small-20">
+            <img class="photo" data-id="2" src="${items.value[item_id].info.media[2]}" />
+          </div>
+          <div class="col-20 small-20">
+            <img class="photo" data-id="3" src="${items.value[item_id].info.media[3]}" />
+          </div>
+          <div class="col-20 small-20">
+            <img class="photo" data-id="4" src="${items.value[item_id].info.media[4]}" />
+          </div>
+        </div>
+        `}
+        ${(!items.value[item_id].info.media[0] || !items.value[item_id].info.description) && $h `
+          <div class="text-color-red photo-desc-error"></div>
+        `}
+        ${items.value[item_id].info.description && $h `
+        <div class="margin-top" innerHTML="${items.value[item_id].info.description}"></div>
+        `}
+      </div>
       <div class="list inset">
         <ul>
-          <li><a class="list-button" href="/stock/item/media/${props.id}/">Добавить товар</a></li>
+          <li><a class="list-button" href="/stock/item/media/${props.id}/">Изменить фотографии</a></li>
+          <li><a class="list-button" href="/stock/item/media/${props.id}/">Изменить информацию</a></li>
+          <li><a class="list-button text-color-red" href="/stock/item/media/${props.id}/">Удалить товар</a></li>
         </ul>
       </div>
     </div>
@@ -106,12 +133,17 @@
   .dialog-input {
     text-transform: uppercase !important;
   }
+  .photo {
+    width: 100%;
+    cursor: pointer;
+  }
 </style>
 <script>
   export default (props, { $store, $f7, $el, $theme, $on, $update }) => {
     var stocks = $store.getters.stocks;
     var items = $store.getters.items;
     var item_id = items.value.findIndex(el => el.id == props.id);
+    var photoBrowser;
     //
 
     console.log("props", props);
@@ -119,7 +151,33 @@
     console.log("items", items);
     console.log("item_id", item_id);
 
+    $on('pageReinit', (e, page) => {
+      //Перезаписываем фотографии при переинициализации
+      //(В случае изменения фото и возврата назад)
+      photoBrowser.params.photos = items.value[item_id].info.media;
+    });
+
     $on('pageInit', (e, page) => {
+      if(!items.value[item_id].info.media[0]){
+        $('.photo-desc-error').html('Нет ни одной фотографии');
+      }
+      if(!items.value[item_id].info.description){
+        $('.photo-desc-error').addClass('margin-top').html('Нет описания');
+      }
+      if(!items.value[item_id].info.media[0] && !items.value[item_id].info.description){
+        $('.photo-desc-error').addClass('text-align-center').html('Нет фотографий и описания');
+      }
+
+      photoBrowser = $f7.photoBrowser.create({
+        photos: items.value[item_id].info.media,
+        type: 'page',
+        pageBackLinkText: 'Назад',
+        navbarOfText: 'из'
+      });
+      $('.photo').on('click', function () {
+        photoBrowser.open(+$(this).attr('data-id'));
+        console.log("+$(this).attr('data-id')", +$(this).attr('data-id'));
+      });
 
       $(page.el).find('.stock-count-btn').on('click', function() {
         let li = $(this).closest('li');
