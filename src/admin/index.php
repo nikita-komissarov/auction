@@ -28,32 +28,45 @@
       <div class="page">
         <div class="page-content">
           <div class="block-title">Основное</div>
-          <div class="list links-list">
+          <div class="list">
             <ul>
               <li>
-                <a href="/accordion/" class="panel-close">Статистика</a>
-              </li>
-            </ul>
-          </div>
-          <div class="block-title">Лоты</div>
-          <div class="list links-list">
-            <ul>
-              <li>
-                <a href="/lot/create/" class="panel-close">Создать новый</a>
+                <a href="#" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">chart_bar</i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Статистика</div>
+                  </div>
+                </a>
               </li>
               <li>
-                <a href="/action-sheet/" class="panel-close">Запланированные</a>
-              </li>
-              <li>
-                <a href="/badge/" class="panel-close">Завершенные</a>
+                <a href="#" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">gear</i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Настройки</div>
+                  </div>
+                </a>
               </li>
             </ul>
           </div>
           <div class="block-title">Магазин</div>
-          <div class="list links-list">
+          <div class="list">
             <ul>
               <li>
-                <a href="/lot/create/" class="panel-close">Совершить продажу</a>
+                <a href="#" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">cart</i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Продажа</div>
+                    <div class="item-after"><span class="badge color-blue">3</span></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">archivebox</i></div>
+                  <div class="item-inner">
+                    <div class="item-title">История продаж</div>
+                  </div>
+                </a>
               </li>
             </ul>
           </div>
@@ -62,6 +75,7 @@
             <ul>
               <li>
                 <a href="/shop/create/" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">plus</i></div>
                   <div class="item-inner">
                     <div class="item-title">Добавить товар</div>
                   </div>
@@ -69,6 +83,7 @@
               </li>
               <li>
                 <a href="/stock/search/" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">search</i></div>
                   <div class="item-inner">
                     <div class="item-title">Поиск товара</div>
                   </div>
@@ -76,6 +91,7 @@
               </li>
               <li>
                 <a href="#" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">text_badge_xmark</i></div>
                   <div class="item-inner">
                     <div class="item-title">Без описания</div>
                     <div class="item-after"><span class="badge color-red">5</span></div>
@@ -84,9 +100,58 @@
               </li>
               <li>
                 <a href="#" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">camera_on_rectangle</i></div>
                   <div class="item-inner">
                     <div class="item-title">Без фотографий</div>
                     <div class="item-after"><span class="badge color-red">5</span></div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="block-title">Аукцион</div>
+          <div class="list">
+            <ul>
+              <li>
+                <a href="/lot/create/" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">plus</i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Создать лот</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">search</i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Поиск лота</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">timer</i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Будущие</div>
+                    <div class="item-after"><span class="badge">2</span></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">chevron_right_2</i></div>
+                  <div class="item-inner">
+                    <div class="item-title">На торгах</div>
+                    <div class="item-after"><span class="badge">4</span></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">status</i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Завершенные</div>
+                    <div class="item-after"><span class="badge">3</span></div>
                   </div>
                 </a>
               </li>
