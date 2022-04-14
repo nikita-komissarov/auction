@@ -55,19 +55,40 @@
               <li>
                 <a href="/lot/create/" class="panel-close">Совершить продажу</a>
               </li>
-              <li>
-                <a href="/shop/create/" class="panel-close">Добавить товар</a>
-              </li>
             </ul>
           </div>
           <div class="block-title">Склад</div>
-          <div class="list links-list">
+          <div class="list">
             <ul>
               <li>
-                <a href="/stock/search/" class="panel-close">Поиск товара</a>
+                <a href="/shop/create/" class="panel-close item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title">Добавить товар</div>
+                  </div>
+                </a>
               </li>
               <li>
-                <a href="/badge/" class="panel-close">Ожидающие медиа</a>
+                <a href="/stock/search/" class="panel-close item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title">Поиск товара</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="panel-close item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title">Без описания</div>
+                    <div class="item-after"><span class="badge color-red">5</span></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="panel-close item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title">Без фотографий</div>
+                    <div class="item-after"><span class="badge color-red">5</span></div>
+                  </div>
+                </a>
               </li>
             </ul>
           </div>
@@ -99,7 +120,7 @@
         </div>
       </div>
     </div>
-    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/stock/item/media/2/"></div>
+    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/stock/item/2/"></div>
     <?php else : ?>
     <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/auth/"></div>
     <?php endif; ?>
@@ -108,7 +129,7 @@
   <script src="/assets/js/moment.js"></script>
   <script src="/assets/js/routes.js"></script>
   <script src="/assets/js/store.js"></script>
-  <script src="/assets/js/app.js"></script>
+  <!-- Скрипт приложения загружается в store.js после получения списка товаров -->
 </body>
 
 </html>
