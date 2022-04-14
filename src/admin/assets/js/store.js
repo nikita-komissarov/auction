@@ -2,6 +2,7 @@ var store = Framework7.createStore({
   state: {
     items: [],
     stocks: [],
+    categories: [],
     loaded: false,
   },
   actions: {
@@ -10,6 +11,13 @@ var store = Framework7.createStore({
       .then((res) => res.json())
       .then((stocks) => {
         state.stocks = stocks;
+      });
+    },
+    loadCategories({ state }) {
+      fetch('/server/proc/stock/categories.php')
+      .then((res) => res.json())
+      .then((categories) => {
+        state.categories = categories;
       });
     },
     loadItems({ state }) {
@@ -37,6 +45,9 @@ var store = Framework7.createStore({
     stocks({ state }) {
       return state.stocks;
     },
+    categories({ state }) {
+      return state.categories;
+    },
     items({ state }) {
       return state.items;
     },
@@ -47,6 +58,7 @@ var store = Framework7.createStore({
 });
 
 store.dispatch('loadStocks');
+store.dispatch('loadCategories');
 store.dispatch('loadItems');
 
 var appScript = document.createElement('script');
