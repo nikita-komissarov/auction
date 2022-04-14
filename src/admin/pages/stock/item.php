@@ -14,7 +14,43 @@
     </div>
     <div class="searchbar-backdrop"></div>
     <div class="page-content">
-      <div class="block-title">Основная информация</div>
+      <div class="block-title display-flex align-items-center justify-content-space-between">
+        Фотографии
+        <a href="/stock/item/media/${props.id}/">
+          <i class="f7-icons">pencil_circle</i>
+        </a>
+      </div>
+      ${items.value[item_id].info.media[0] && $h ? $h `
+      <div class="block block-strong inset no-margin-bottom">
+        <div class="row align-items-flex-end">
+          <div class="col-20 photo">
+            <img class="elevation-3 elevation-hover-5" data-id="0" src="${items.value[item_id].info.media[0]}" />
+          </div>
+          <div class="col-20 photo">
+            <img class="elevation-3 elevation-hover-5" data-id="1" src="${items.value[item_id].info.media[1]}" />
+          </div>
+          <div class="col-20 photo">
+            <img class="elevation-3 elevation-hover-5" data-id="2" src="${items.value[item_id].info.media[2]}" />
+          </div>
+          <div class="col-20 photo">
+            <img class="elevation-3 elevation-hover-5" data-id="3" src="${items.value[item_id].info.media[3]}" />
+          </div>
+          <div class="col-20 photo">
+            <img class="elevation-3 elevation-hover-5" data-id="4" src="${items.value[item_id].info.media[4]}" />
+          </div>
+        </div>
+      </div>
+      ` : $h `
+      <div class="list inset">
+        <ul>
+          <li><a class="list-button text-color-red" href="/stock/item/media/${props.id}/">У товара нет фотографий</a></li>
+        </ul>
+      </div>
+      `}
+      <div class="block-title display-flex align-items-center justify-content-space-between">
+        Основная информация
+        <a href="#"><i class="f7-icons">pencil_circle</i></a>
+      </div>
       <div class="list inset">
         <ul>
           <li class="item item-content">
@@ -62,8 +98,8 @@
       </div>
       <div class="list inset">
         <ul>
-          <li><a class="list-button" href="/stock/item/media/${props.id}/">Добавить в корзину</a></li>
           <li><a class="list-button" href="/stock/item/media/${props.id}/">Выставить на аукцион</a></li>
+          <li><a class="list-button" href="/stock/item/media/${props.id}/">Добавить в корзину</a></li>
         </ul>
       </div>
       <div class="block-title">Наличие на складах</div>
@@ -91,41 +127,21 @@
           `)}
         </ul>
       </div>
-      <div class="block-title">Фотографии и описание</div>
-      <div class="block block-strong inset">
-        ${items.value[item_id].info.media[0] && $h `
-        <div class="row align-items-center">
-          <div class="col-100 small-20">
-            <img class="photo" data-id="0" src="${items.value[item_id].info.media[0]}" />
-          </div>
-          <div class="col-20 small-20">
-            <img class="photo" data-id="1" src="${items.value[item_id].info.media[1]}" />
-          </div>
-          <div class="col-20 small-20">
-            <img class="photo" data-id="2" src="${items.value[item_id].info.media[2]}" />
-          </div>
-          <div class="col-20 small-20">
-            <img class="photo" data-id="3" src="${items.value[item_id].info.media[3]}" />
-          </div>
-          <div class="col-20 small-20">
-            <img class="photo" data-id="4" src="${items.value[item_id].info.media[4]}" />
-          </div>
-        </div>
-        `}
-        ${(!items.value[item_id].info.media[0] || !items.value[item_id].info.description) && $h `
-          <div class="text-color-red photo-desc-error"></div>
-        `}
-        ${items.value[item_id].info.description && $h `
-        <div class="margin-top" innerHTML="${items.value[item_id].info.description}"></div>
-        `}
+      <div class="block-title display-flex align-items-center justify-content-space-between">
+        Описание
+        <a href="#"><i class="f7-icons">pencil_circle</i></a>
       </div>
+      ${items.value[item_id].info.description && $h ? $h`
+      <div class="block block-strong inset">
+        <div innerHTML="${items.value[item_id].info.description}"></div>
+      </div>
+      ` : $h `
       <div class="list inset">
         <ul>
-          <li><a class="list-button" href="/stock/item/media/${props.id}/">Изменить фотографии</a></li>
-          <li><a class="list-button" href="/stock/item/media/${props.id}/">Изменить информацию</a></li>
-          <li><a class="list-button text-color-red" href="/stock/item/media/${props.id}/">Удалить товар</a></li>
+          <li><a class="list-button text-color-red" href="/stock/item/media/${props.id}/">У товара нет описания</a></li>
         </ul>
       </div>
+      `}
     </div>
   </div>
 </template>
@@ -133,9 +149,13 @@
   .dialog-input {
     text-transform: uppercase !important;
   }
-  .photo {
-    width: 100%;
+  .photo > img {
+    width: 12.5vw;
+    height: 12.5vw;
     cursor: pointer;
+    object-fit: cover;
+  }
+  .photo {
   }
 </style>
 <script>
@@ -158,16 +178,6 @@
     });
 
     $on('pageInit', (e, page) => {
-      if(!items.value[item_id].info.media[0]){
-        $('.photo-desc-error').html('Нет ни одной фотографии');
-      }
-      if(!items.value[item_id].info.description){
-        $('.photo-desc-error').addClass('margin-top').html('Нет описания');
-      }
-      if(!items.value[item_id].info.media[0] && !items.value[item_id].info.description){
-        $('.photo-desc-error').addClass('text-align-center').html('Нет фотографий и описания');
-      }
-
       photoBrowser = $f7.photoBrowser.create({
         photos: items.value[item_id].info.media,
         type: 'page',
@@ -175,8 +185,7 @@
         navbarOfText: 'из'
       });
       $('.photo').on('click', function () {
-        photoBrowser.open(+$(this).attr('data-id'));
-        console.log("+$(this).attr('data-id')", +$(this).attr('data-id'));
+        photoBrowser.open(+$(this).find('img').attr('data-id'));
       });
 
       $(page.el).find('.stock-count-btn').on('click', function() {
