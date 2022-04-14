@@ -86,6 +86,10 @@
             $f7.dialog.progress('Обработка триггеров...');
             setTimeout(function() {
               $f7.dialog.close();
+
+              app.store.dispatch('reloadItem', {
+                item_id: props.id,
+              });
             }, 1500);
           }
           else {
@@ -95,7 +99,7 @@
             dialog.setText('Файл ' + (id + 1) + ' из ' + list.length);
 
             $f7.request({
-              url: '/server/proc/stock/media.php',
+              url: '/server/proc/stock/media/put.php',
               method: 'POST',
               dataType: 'json',
               data: list[id],
@@ -117,7 +121,7 @@
           method: 'POST',
           dataType: 'json',
           data: {
-            item: 2,
+            item: props.id,
           },
           success: function (data) {
             $f7.dialog.close();
@@ -127,8 +131,7 @@
               if(item == null) return;
               var data = new FormData();
 
-              data.append('item', 2);
-              data.append('id', index);
+              data.append('item', props.id);
               data.append('file', item);
 
               data_list.push(data);

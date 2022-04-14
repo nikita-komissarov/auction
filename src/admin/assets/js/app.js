@@ -27,7 +27,23 @@ var app = new Framework7({
   },
 });
 
-var ws;
+const sumObjectValues = obj => Object.values(obj).reduce((a, b) => a + b);
+const sumObjectValuesBy = obj => Object.keys(obj).reduce((acc, value) => acc + obj[value], 0);
+function htmldecode (str){
+
+  var txt = document.createElement('textarea');
+  txt.innerHTML = str;
+  return txt.value;
+}
+function bitsOfNum(i, round = 0){
+  i = parseFloat(i).toFixed(round) + '';
+  return i.replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1 ');
+}
+
+function declOfNum(number, titles) {
+  cases = [2, 0, 1, 1, 1, 2];  
+  return titles[(number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5]];  
+}
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -35,6 +51,7 @@ function getCookie(name) {
   if(parts.length === 2) return parts.pop().split(';').shift();
 }
 
+var ws;
 window.onload = function () {
   ws = new WebSocket('ws://localhost:7777?key=' + getCookie('AUCTION-ADMIN-ID'));
   ws.onmessage = function(message) {
@@ -203,7 +220,7 @@ function createMediaInput(el, block_id){
   let li = $(`
     <li id="media-input-${id}" data-id="${id}" class="no-sorting">
       <a href="#" class="item-link item-content media-upload-btn">
-        <div class="item-media"><img src="/assets/img/aperture.png"
+        <div class="item-media" style="margin: auto;"><img src="/assets/img/camera.svg"
             width="50" /></div>
         <div class="item-inner">
           <div class="item-title-row">
@@ -221,3 +238,16 @@ function createMediaInput(el, block_id){
   createMediaInputInitEvents(el, block_id, id, li);
   return true;
 }
+
+function updateCountNoPhotos(){
+  let count = 0;
+  app.store.getters.items.value.forEach((item, index) => {
+
+console.log("item.info.media.length", item.info.media.length);
+    if(item.info.media.length == 0) count++;
+  });
+
+  return count;
+}
+
+console.log("updateCountNoPhotos()", updateCountNoPhotos());

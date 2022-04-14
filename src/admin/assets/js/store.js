@@ -2,6 +2,7 @@ var store = Framework7.createStore({
   state: {
     items: [],
     stocks: [],
+    loaded: false,
   },
   actions: {
     loadStocks({ state }) {
@@ -16,6 +17,7 @@ var store = Framework7.createStore({
       .then((res) => res.json())
       .then((items) => {
         state.items = items;
+        state.loaded = true;
       });
     },
     reloadItem({ state }, { item_id }) {
@@ -38,8 +40,15 @@ var store = Framework7.createStore({
     items({ state }) {
       return state.items;
     },
+    loaded({ state }) {
+      return state.loaded;
+    },
   },
 });
 
 store.dispatch('loadStocks');
 store.dispatch('loadItems');
+
+var appScript = document.createElement('script');
+appScript.setAttribute('src','/assets/js/app.js');
+document.body.appendChild(appScript);
