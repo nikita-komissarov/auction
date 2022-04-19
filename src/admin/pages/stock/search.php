@@ -181,13 +181,14 @@
   }
 </style>
 <script>
-  export default (props, { $store, $f7, $on }) => {
+  export default (props, { $store, $f7, $on, $f7route }) => {
     var categories = $store.getters.categories;
     var items = $store.getters.items;
     var scannerId = app.utils.id();
     
+console.log("$f7route.query", $f7route.query);
     var searchSort = null;
-    var searchFilter = null;
+    var searchFilter = ($f7route.query.filter ? +$f7route.query.filter : null);
     var searchCategory = null;
 
     const selectSort = (id) => {

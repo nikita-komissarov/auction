@@ -90,19 +90,19 @@
                 </a>
               </li>
               <li>
-                <a href="#" class="panel-close item-link item-content">
-                  <div class="item-media"><i class="f7-icons">text_badge_xmark</i></div>
+                <a href="/stock/search/?filter=4" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">camera_on_rectangle</i></div>
                   <div class="item-inner">
-                    <div class="item-title">Без описания</div>
+                    <div class="item-title">Без фотографий</div>
                     <div class="item-after"><span class="badge color-red">5</span></div>
                   </div>
                 </a>
               </li>
               <li>
-                <a href="#" class="panel-close item-link item-content">
-                  <div class="item-media"><i class="f7-icons">camera_on_rectangle</i></div>
+                <a href="/stock/search/?filter=6" class="panel-close item-link item-content">
+                  <div class="item-media"><i class="f7-icons">text_badge_xmark</i></div>
                   <div class="item-inner">
-                    <div class="item-title">Без фотографий</div>
+                    <div class="item-title">Без описания</div>
                     <div class="item-after"><span class="badge color-red">5</span></div>
                   </div>
                 </a>
@@ -185,7 +185,7 @@
         </div>
       </div>
     </div>
-    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/stock/search/"></div>
+    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/stock/search/?filter=6"></div>
     <?php else : ?>
     <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/auth/"></div>
     <?php endif; ?>

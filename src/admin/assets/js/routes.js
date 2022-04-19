@@ -24,6 +24,10 @@ var routes = [
     path: '/stock/search/',
     componentUrl: './pages/stock/search.php',
     name: 'stock-search',
+    options: {
+      reloadCurrent: true,
+      //reloadAll: true,
+    },
   },
   {
     path: '/stock/item/:id/',
