@@ -12,6 +12,8 @@ var app = new Framework7({
   routes: routes,
   dialog: {
     title: 'Панель управления',
+    buttonCancel: 'Отменить',
+    buttonOk: 'ОК',
   },
   popup: {
     closeOnEscape: true,

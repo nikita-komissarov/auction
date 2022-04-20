@@ -114,12 +114,10 @@
                 <div class="item-footer">${stock.address}</div>
               </div>
               <div class="item-after">
-                <div class="stepper stepper-init">
-                  <div data-val="-1" class="stock-count-btn stepper-button-minus"></div>
-                  <div class="stepper-input-wrap">
-                    <input class="stock-count" type="text" value="${items.value[item_id].stock[stock.id].count}" min="0" step="1" readonly />
-                  </div>
-                  <div data-val="1" class="stock-count-btn stepper-button-plus"></div>
+                <div class="segmented">
+                  <button data-type="minus" class="button button-outline stock-count-change-btn">-</button>
+                  <button class="button button-outline stock-count-btn padding-horizontal">${items.value[item_id].stock[stock.id].count} / 0</button>
+                  <button data-type="plus" class="button button-outline stock-count-change-btn">+</button>
                 </div>
               </div>
             </div>
@@ -146,16 +144,17 @@
   </div>
 </template>
 <style>
-  .dialog-input {
+/*   .dialog-input {
     text-transform: uppercase !important;
-  }
+  } */
   .photo > img {
     width: 12.5vw;
     height: 12.5vw;
     cursor: pointer;
     object-fit: cover;
   }
-  .photo {
+  .stock-count-btn {
+    min-width: 5rem !important;
   }
 </style>
 <script>
@@ -188,12 +187,113 @@
         photoBrowser.open(+$(this).find('img').attr('data-id'));
       });
 
-      $(page.el).find('.stock-count-btn').on('click', function() {
+      $(page.el).find('.stock-count-change-btn').on('click', function() {
         let li = $(this).closest('li');
         let stock = +$(li).attr('data-id');
         let count = +$(li).find('.stock-count').val();
         let val = +$(this).attr('data-val');
+        let type = ($(this).attr('data-type') == 'plus' ? 'plus' : 'minus');
 
+        if(type == 'plus'){
+          let dialog = $f7.dialog.prompt(
+            'Укажите количество',
+            'Добавление товара',
+            function (amount) {
+              if(amount <= 0) return $f7.dialog.alert('Количество должно быть больше нуля');
+              console.log(amount);
+              let dialog = $f7.dialog.prompt(
+                'Укажите закупочную стоимость одной единицы товара',
+                'Добавление товара',
+                function (price) {
+                  console.log(price);
+                  var dialog = app.dialog.create({
+                    title: 'Подтвердите ввод',
+                    text: `
+                      <table style="text-align: left; width: 100%;">
+                        <tr>
+                          <td>
+                            <b>Место:</b>
+                          </td>
+                          <td>
+                            'Основной склад'
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>Количество:</b>
+                          </td>
+                          <td>
+                            ${amount} ${declOfNum(amount, ['штука','штуки','штук'])}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>Стоимость:</b>
+                          </td>
+                          <td>
+                            ${bitsOfNum(price * amount, 2)} руб
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>Цена за шт:</b>
+                          </td>
+                          <td>
+                            ${bitsOfNum(price, 2)} руб
+                          </td>
+                        </tr>
+                      </table>
+                    `,
+                    buttons: [
+                      {
+                        text: 'Отменить',
+                      },
+                      {
+                        text: 'Подтвердить',
+                        onClick: function(dialog, e) {
+                          $(li).find('input').click(); 
+                        },
+                      },
+                    ],
+                  }).open();
+                },
+                function () {},
+                $(stock).find('.stock-rack').html(),
+              ).once('opened', function(event){
+                let el = event.el;
+                $(el).find('input')
+                  .attr('type', 'number')
+                  .attr('min', '1')
+                  .attr('placeholder', 'Закупочная стоимость');
+                console.log("el", el);
+              });
+            },
+            function () {},
+            $(stock).find('.stock-rack').html(),
+          ).once('opened', function(event){
+            let el = event.el;
+            $(el).find('input')
+              .attr('type', 'number')
+              .attr('min', '1')
+              .attr('placeholder', 'Количество');
+            console.log("el", el);
+          });
+        }
+        else {
+          $f7.dialog.prompt(
+            'Отсканируйте внутренний артикул',
+            'Удаление товара',
+            function (input) {
+              let test = /^[0-9]+$/.test(input);
+              if(!test) {
+                return $f7.dialog.alert('Используйте только цифры<br><br><b>Изменения не применены</b>');
+              }
+            },
+            function () {},
+            $(stock).find('.stock-rack').html(),
+          );
+        }
+        return true;
         if((count + val) < 0) return $f7.dialog.alert('Количество товара на складе не может быть меньше нуля');
         $(li).find('.stock-count-btn').addClass('disabled');
         $f7.request({
