@@ -10,32 +10,18 @@
           </a>
         </div>
         <div class="title">Добавление нового товара</div>
+        <div class="right">
+          <a href="#" class="item-autocomplete-btn">
+            <i class="f7-icons">doc_text_viewfinder</i>
+          </a>
+        </div>
       </div>
     </div>
     <div class="page-content">
       <form id="form-lot-create">
-        <div class="block-title block-title-medium">Основная информация</div>
+        <div class="block-title">Основная информация</div>
         <div class="list inset">
           <ul>
-            <li class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-title item-label">Артикул</div>
-                <div class="item-input-wrap">
-                  <input id="article" class="scanner-input" type="number" placeholder="Артикул на упаковке" value="123456" />
-                  <span class="input-clear-button"></span>
-                  <div class="item-input-info">Используйте сканер штрих-кода</div>
-                </div>
-              </div>
-            </li>
-            <li class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-title item-label">Название товара</div>
-                <div class="item-input-wrap">
-                  <input id="name" type="text" placeholder="Название товара" value="Блендер" />
-                  <span class="input-clear-button"></span>
-                </div>
-              </div>
-            </li>
             <li>
               <a class="item-link item-content" href="#" id="category">
                 <input type="hidden" />
@@ -45,25 +31,53 @@
                 </div>
               </a>
             </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Артикул</div>
+                <div class="item-input-wrap">
+                  <input id="article" class="scanner-input" type="number" placeholder="Артикул на упаковке"/>
+                  <span class="input-clear-button"></span>
+                  <div class="item-input-info">Используйте сканер штрих-кода</div>
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Название товара</div>
+                <div class="item-input-wrap">
+                  <input id="name" type="text" placeholder="Название товара" />
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
-        <div class="block-title block-title-medium">Дополнительная информация</div>
+        <div class="block-title">Дополнительная информация</div>
         <div class="list inset">
           <ul>
             <li class="item-content item-input">
               <div class="item-inner">
-                <div class="item-title item-label">Стоимость выкупа и продажи в розницу</div>
+                <div class="item-title item-label">ID в Яндекс.Маркет</div>
                 <div class="item-input-wrap">
-                  <input id="price" type="number" placeholder="Стоимость выкупа и продажи в розницу" value="7000" />
+                  <input id="market-id" type="number" placeholder="558171067"/>
                   <span class="input-clear-button"></span>
                 </div>
               </div>
             </li>
             <li class="item-content item-input">
               <div class="item-inner">
-                <div class="item-title item-label">Ссылка на страницу из магазина</div>
+                <div class="item-title item-label">Ссылка на страницу Яндекс.Маркет</div>
                 <div class="item-input-wrap">
-                  <input id="market" type="text" placeholder="https://market.yandex.ru/" value="https://market.yandex.ru/product--smartfon-apple-iphone-11/558171067" />
+                  <input id="market-url" type="text" placeholder="https://market.yandex.ru/"/>
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Стоимость продажи в розницу</div>
+                <div class="item-input-wrap">
+                  <input id="price" type="number" placeholder="Стоимость продажи в розницу" />
                   <span class="input-clear-button"></span>
                 </div>
               </div>
@@ -91,7 +105,14 @@
     </div>
   </div>
 </template>
-
+<style>
+  .text-editor table {
+    width: 100%;
+  }
+  .text-editor table td {
+    width: 50%;
+  }
+</style>
 <script>
   export default (props, { $, $f7, $el, $on }) => {
 
@@ -99,6 +120,65 @@
 
     $on('pageInit', (e, page) => {
       scannerFocusEl = $(page.el).find('.scanner-input');
+
+      $('.item-autocomplete-btn').on('click', function(e){
+        e.preventDefault();
+        $f7.dialog.prompt(
+          'Введите ID товара для автозаполнения формы',
+          'Яндекс.Маркет',
+          function (ym_id) {
+            let test = /^[0-9]+$/.test(ym_id);
+            if(!test) {
+              return $f7.dialog.alert('Используйте только цифры<br><br><b>Изменения не применены</b>');
+            }
+            $f7.dialog.progress('Загрузка данных с Яндекс.Маркет');
+            $f7.request({
+              url: '/server/proc/stock/ym-autocomplete.php',
+              method: 'POST',
+              dataType: 'json',
+              data: {
+                id: ym_id,
+              },
+              success: function (data) {
+                $f7.dialog.close();
+
+                console.log("data", data);
+                if(data.info.error == undefined){
+                  $el.value.find('#name').val(data.info.name);
+                  $el.value.find('#price').val(data.info.price);
+                  $el.value.find('#market-id').val(data.info.id);
+                  $el.value.find('#market-url').val(data.info.url);
+                }
+                
+                if(data.specs.error == undefined){
+                  let specText = '';
+                  data.specs.specifications.forEach((spec, index) => {
+                    specText += `<h4>${spec.name}</h4><table>`;
+                    spec.subspecs.forEach((subspec, index) => {
+                      specText += `<tr><td>${subspec.name}</td><td>${subspec.value}</td></tr>`;
+                    });
+                    specText += `</table>`;
+                  });
+
+                  textEditor.setValue(specText);
+                }
+              },
+              error: function (data) {
+                $f7.dialog.close();
+                $f7.dialog.alert('Ошибка получения данных');
+              }
+            });
+          },
+          function () {},
+        ).once('opened', function(event){
+          let el = event.el;
+          $(el).find('input')
+            .attr('type', 'number')
+            .attr('min', '1')
+            .attr('placeholder', 'ID на Яндекс.Маркет');
+          console.log("el", el);
+        });
+      });
 
       textEditor = $f7.textEditor.create({
         el: $el.value.find('.text-editor'),
@@ -164,14 +244,16 @@
           category: +getVal($el.value.find('#category').find('input')),
 
           price: +getVal($el.value.find('#price')),
-          market: getVal($el.value.find('#market')),
-          description: app.textEditor.get(textEditor).value,
+          marketId: +getVal($el.value.find('#market-id')),
+          marketUrl: getVal($el.value.find('#market-url')),
+          description: textEditor.getValue(),
         };
 
 console.log("form", form);
 
         if(form.article == 0) return $f7.dialog.alert('Укажите артикул товара');
         if(!form.name) return $f7.dialog.alert('Укажите название товара');
+        if(form.price == 0) return $f7.dialog.alert('Укажите стоимость товара');
         if(form.category == 0) return $f7.dialog.alert('Укажите категорию товара');
 
         $f7.dialog.preloader('Создание товара...');
@@ -184,8 +266,9 @@ console.log("form", form);
             name: form.name,
             category: form.category,
 
+            marketId: form.marketId,
+            marketUrl: form.marketUrl,
             price: form.price,
-            market: form.market,
             description: form.description,
           },
           success: function (data) {
@@ -216,7 +299,7 @@ console.log("form", form);
             $el.value.find('#price').val(null);
             $el.value.find('#market').val(null);
 
-            $el.value.find('#description').html('');
+            textEditor.clearValue();
           },
           error: function (data) {
             $f7.dialog.close();
@@ -241,7 +324,7 @@ console.log("form", form);
       });
     });
     $on('pageBeforeRemove', () => {
-      textEditorCustomButtons.destroy()
+      textEditor.destroy()
     });
 
     return $render;
