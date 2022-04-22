@@ -131,7 +131,7 @@
       </div>
       ${items.value[item_id].info.description && $h ? $h`
       <div class="block block-strong inset">
-        <div innerHTML="${items.value[item_id].info.description}"></div>
+        <div class="description-block" innerHTML="${items.value[item_id].info.description}"></div>
       </div>
       ` : $h `
       <div class="list inset">
@@ -155,6 +155,20 @@
   }
   .stock-count-btn {
     min-width: 5rem !important;
+  }
+  .description-block table {
+    width: 100%;
+  }
+  .description-block table td {
+    width: 50%;
+  }
+  .description-block h1:first-child
+  .description-block h2:first-child,
+  .description-block h3:first-child,
+  .description-block h4:first-child,
+  .description-block h5:first-child,
+  .description-block h6:first-child {
+    margin-top: 0;
   }
 </style>
 <script>
