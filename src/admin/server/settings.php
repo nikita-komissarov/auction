@@ -34,3 +34,5 @@
   //DaData
   define('DADATA_TOKEN', '8ee449e223f617af130729df70868292783a7c56');
   define('DADATA_SECRET', 'b4cae5a1cb7205bb8927939bd65bc7ca9dc880ca');
+  //ymScanner
+  define('YMSCANNER_TOKEN', '4a22df1e409b6b09cf50f99f9f3f32b0');
