@@ -1,5 +1,4 @@
 var routes = [
-  // Index page
   {
     path: '/',
     componentUrl: './pages/home.php',
@@ -16,9 +15,12 @@ var routes = [
     name: 'lot-create',
   },
   {
-    path: '/shop/create/',
-    componentUrl: './pages/shop/create.php',
-    name: 'shop-create',
+    path: '/stock/create/',
+    componentUrl: './pages/stock/create.php',
+    name: 'stock-create',
+    options: {
+      reloadCurrent: true,
+    },
   },
   {
     path: '/stock/search/',
@@ -26,7 +28,6 @@ var routes = [
     name: 'stock-search',
     options: {
       reloadCurrent: true,
-      //reloadAll: true,
     },
   },
   {
