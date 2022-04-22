@@ -182,38 +182,41 @@
 </style>
 <script>
   export default (props, { $store, $f7, $on, $f7route }) => {
+    clearList();
     var categories = $store.getters.categories;
     var items = $store.getters.items;
     var scannerId = app.utils.id();
     
-console.log("$f7route.query", $f7route.query);
+    var searchbar = null;
     var searchSort = null;
     var searchFilter = ($f7route.query.filter ? +$f7route.query.filter : null);
     var searchCategory = null;
 
+    function checkActiveFilter(el, value){
+      if(value != null) $(el).addClass('text-color-red');
+      else $(el).removeClass('text-color-red');
+    }
+
     const selectSort = (id) => {
       searchSort = id;
-
-      let btn = $('.popover-open[data-popover=".popover-sort"]');
-      if(id != null) $(btn).addClass('text-color-red');
-      else $(btn).removeClass('text-color-red');
+      //Зажигаем подсветку кнопок фильтрации
+      checkActiveFilter($('.popover-open[data-popover=".popover-sort"]'), id);
       renderList();
     }
     const selectFilter = (id) => {
       searchFilter = id;
-
-      let btn = $('.popover-open[data-popover=".popover-filters"]');
-      if(id != null) $(btn).addClass('text-color-red');
-      else $(btn).removeClass('text-color-red');
+      //Зажигаем подсветку кнопок фильтрации
+      checkActiveFilter($('.popover-open[data-popover=".popover-filters"]'), id);
       renderList();
     }
     const selectCategory = (id) => {
       searchCategory = id;
-
-      let btn = $('.popover-open[data-popover=".popover-categories"]');
-      if(id != null) $(btn).addClass('text-color-red');
-      else $(btn).removeClass('text-color-red');
+      //Зажигаем подсветку кнопок фильтрации
+      checkActiveFilter($('.popover-open[data-popover=".popover-categories"]'), id);
       renderList();
+    }
+    function clearList(el = '.stock-search-list'){
+      $(el).find('li').html('');
     }
     function renderList(el = '.stock-search-list'){
 
@@ -295,8 +298,13 @@ console.log("$f7route.query", $f7route.query);
 
     $on('pageInit', () => {
       scannerFocusEl = $(document).find('.scanner-input-' + scannerId);
-      // create searchbar
-      var searchbar = $f7.searchbar.create({
+
+      //Зажигаем подсветку кнопок фильтрации, если фильтры заранее включены
+      checkActiveFilter($('.popover-open[data-popover=".popover-sort"]'), searchSort);
+      checkActiveFilter($('.popover-open[data-popover=".popover-filters"]'), searchFilter);
+      checkActiveFilter($('.popover-open[data-popover=".popover-categories"]'), searchCategory);
+
+      searchbar = $f7.searchbar.create({
         el: '.searchbar',
         searchContainer: '.stock-search-list',
         searchIn: '.item-title, .item-subtitle',
@@ -309,7 +317,13 @@ console.log("$f7route.query", $f7route.query);
       setTimeout(function() {
         renderList();
       }, 200);
-    })
+    });
+    $on('pageAfterIn', () => {
+      renderList();
+    });
+    $on('pageBeforeRemove', () => {
+      searchbar.destroy();
+    });
 
     return $render;
   }
