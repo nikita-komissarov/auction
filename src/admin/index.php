@@ -74,7 +74,7 @@
           <div class="list">
             <ul>
               <li>
-                <a href="/shop/create/" class="panel-close item-link item-content">
+                <a href="/stock/create/" class="panel-close item-link item-content">
                   <div class="item-media"><i class="f7-icons">plus</i></div>
                   <div class="item-inner">
                     <div class="item-title">Добавить товар</div>
@@ -94,7 +94,7 @@
                   <div class="item-media"><i class="f7-icons">camera_on_rectangle</i></div>
                   <div class="item-inner">
                     <div class="item-title">Без фотографий</div>
-                    <div class="item-after"><span class="badge color-red">5</span></div>
+                    <div class="item-after" id="menu-count-photo"></div>
                   </div>
                 </a>
               </li>
@@ -103,7 +103,7 @@
                   <div class="item-media"><i class="f7-icons">text_badge_xmark</i></div>
                   <div class="item-inner">
                     <div class="item-title">Без описания</div>
-                    <div class="item-after"><span class="badge color-red">5</span></div>
+                    <div class="item-after" id="menu-count-description"></div>
                   </div>
                 </a>
               </li>
@@ -185,7 +185,7 @@
         </div>
       </div>
     </div>
-    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/stock/item/2/"></div>
+    <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/stock/create/"></div>
     <?php else : ?>
     <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/auth/"></div>
     <?php endif; ?>
