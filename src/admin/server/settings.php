@@ -17,8 +17,8 @@
   }
 
   //DATABASE
-  define('DB_TABLE', 'auction');
-  define('DB_USER', 'auction');
+  define('DB_TABLE', 'reuc');
+  define('DB_USER', 'reuc');
   define('DB_PASS', 'fb8fcddc705541ff89c66ed031bcf90b');
   //Yandex.Cloud Storage
   define('YANDEX_CLOUD_STORAGE_BUCKET', 'auction.dev');
