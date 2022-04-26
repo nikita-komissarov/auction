@@ -253,3 +253,12 @@ console.log("item.info.media.length", item.info.media.length);
 }
 
 console.log("updateCountNoPhotos()", updateCountNoPhotos());
+
+
+
+
+
+//////////////////////////
+
+
+console.log(navigator);
