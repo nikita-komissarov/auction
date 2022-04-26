@@ -12,7 +12,7 @@
 
 	$generator = new Picqer\Barcode\BarcodeGeneratorSVG();
 	$img = (object)[
-		'w' => 290,
+		'w' => 270,
 		'h' => 200,
 		'item_offset' => 170,
 		'entry_offset' => 85,
@@ -30,10 +30,10 @@
 	
 
 	$svg  = '<svg width="'.$img->w.'" height="'.$img->h.'">';
-  $svg .= 	'<text x="0" style="transform: translate(145px)">';
+  $svg .= 	'<text x="0" style="transform: translate(135px)">';
   $svg .= 		'<tspan x="0" y="20" text-anchor="middle" style="font-size: 20px; letter-spacing: 1.5px; font-weight: bold; font-family: sans-serif;">REUC.MARKET</tspan>';
-  $svg .= 		'<tspan x="0" y="'.($img->w - $img->item_offset - 20).'" text-anchor="middle" style="font-size: 16px; font-family: monospace; letter-spacing: 3px;">'.$item->article.'.'.$item->id.'</tspan>';
-  $svg .= 		'<tspan x="0" y="'.($img->w - $img->entry_offset - 20).'" text-anchor="middle" style="font-size: 16px; font-family: monospace; letter-spacing: 3px;">'.$entry->article.'.'.$entry->id.'</tspan>';
+  $svg .= 		'<tspan x="0" y="'.($img->w - $img->item_offset).'" text-anchor="middle" style="font-size: 16px; font-family: monospace; letter-spacing: 3px;">'.$item->article.'.'.$item->id.'</tspan>';
+  $svg .= 		'<tspan x="0" y="'.($img->w - $img->entry_offset).'" text-anchor="middle" style="font-size: 16px; font-family: monospace; letter-spacing: 3px;">'.$entry->article.'.'.$entry->id.'</tspan>';
   $svg .= 	'</text>';
   $svg .= 	'<g id="item-barcode" fill="black" stroke="none">';
 	foreach(explode(PHP_EOL, $item->barcode) as $key => $line) {
