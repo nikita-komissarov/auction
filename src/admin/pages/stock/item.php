@@ -10,6 +10,14 @@
           </a>
         </div>
         <div class="title">Товар #${props.id}</div>
+        <div class="right">
+          <a href="#" class="stock-add-entry" data-item-id="${props.id}">
+            <i class="f7-icons">plus</i>
+          </a>
+          <a href="#" class="stock-entry-list" data-item-id="${props.id}">
+            <i class="f7-icons">minus</i>
+          </a>
+        </div>
       </div>
     </div>
     <div class="searchbar-backdrop"></div>
@@ -177,6 +185,7 @@
     var items = $store.getters.items;
     var item_id = items.value.findIndex(el => el.id == props.id);
     var photoBrowser;
+    var popupList;
     //
 
     console.log("props", props);
@@ -201,6 +210,194 @@
         photoBrowser.open(+$(this).find('img').attr('data-id'));
       });
 
+      $(page.navbarEl).find('.stock-entry-list').on('click', function() {
+        let item_id = +$(this).attr('data-item-id').trim();
+        $f7.dialog.preloader('Загрузка списка...');
+        $f7.request({
+          url: '/server/proc/stock/entry/list.php',
+          method: 'POST',
+          dataType: 'json',
+          data: {
+            item: item_id,
+          },
+          success: function (data) {
+            console.log("data", data);
+            $f7.dialog.close();
+            let list = '';
+            data.forEach((entry, index) => {
+              list += `
+                <li>
+                  <a href="#" class="item-link item-content" data-id="${entry.id}">
+                    <div class="item-inner">
+                      <div class="item-title">
+                        <span class="article text-color-red">${entry.article}</span>.${entry.id}
+                        <div class="item-footer">${entry.price} руб, ${moment.unix(entry.create_time).format('DD.MM.YYYY, HH:MM:ss')}</div>
+                      </div>
+                      <div class="item-after">Печать</div>
+                    </div>
+                  </a>
+                </li>
+              `;
+              console.log("entry", entry);
+            });
+            popupList = $f7.popup.create({
+              content: `
+                <div class="popup" style="overflow: auto;">
+                  <div class="list no-margin">
+                    <ul>
+                      ${list}
+                    </ul>
+                  </div>
+                </div>
+              `,
+              // Events
+              on: {
+                open: function (popup) {
+                  console.log("popup", );
+                  $(popup.el).find('a').on('click', function(){
+                    let el = $(this);
+                    let id = +$(this).attr('data-id');
+                    console.log("id", id);
+                    $f7.dialog.preloader('Генерация этикетки...');
+                    $f7.request({
+                      url: '/server/proc/stock/entry/label.php',
+                      method: 'POST',
+                      dataType: 'text',
+                      data: {
+                        entry: id,
+                      },
+                      success: function (data) {
+                        function PrintElem(data)
+                        {
+                          var wnd = window.open('', 'PRINT', 'height=600,width=800');
+
+                          wnd.document.write('<html><head><title>' + document.title  + '</title>');
+                          wnd.document.write('</head><body >');
+                          wnd.document.write(data);
+                          wnd.document.write('</body></html>');
+
+                          wnd.document.close();
+                          wnd.focus();
+                          wnd.print();
+                          wnd.close();
+
+                          return true;
+                        }
+                        $f7.dialog.close();
+                        $(el).find('.article').removeClass('text-color-red').addClass('text-color-green');
+                        PrintElem(data);
+                      },
+                      error: function (data) {
+                        $f7.dialog.close();
+                        $f7.dialog.alert('Ошибка изменения ячейки');
+                      }
+                    });
+                  });
+                  console.log('Popup open');
+                },
+              }
+            }).open();
+          },
+          error: function (data) {
+            $f7.dialog.close();
+            $f7.dialog.alert('Ошибка добавления товара');
+          }
+        });
+      });
+      $(page.navbarEl).find('.stock-add-entry').on('click', function() {
+        let item_id = +$(this).attr('data-item-id').trim();
+        let dialog = $f7.dialog.prompt(
+          'Укажите количество',
+          'Добавление товара',
+          function (amount) {
+            if(amount <= 0) return $f7.dialog.alert('Количество должно быть больше нуля');
+            if(amount > 500) return $f7.dialog.alert('Не более 500 штук за один раз');
+            console.log(amount);
+            let dialog = $f7.dialog.prompt(
+              'Укажите закупочную стоимость одной единицы товара',
+              'Добавление товара',
+              function (price) {
+                console.log(price);
+                var dialog = app.dialog.create({
+                  title: 'Подтвердите ввод',
+                  text: `
+                    <table style="text-align: left; width: 100%;">
+                      <tr>
+                        <td>
+                          <b>Количество:</b>
+                        </td>
+                        <td>
+                          ${amount} ${declOfNum(amount, ['штука','штуки','штук'])}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Цена за шт:</b>
+                        </td>
+                        <td>
+                          ${bitsOfNum(price, 2)} руб
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Стоимость:</b>
+                        </td>
+                        <td>
+                          ${bitsOfNum(price * amount, 2)} руб
+                        </td>
+                      </tr>
+                    </table>
+                  `,
+                  buttons: [
+                    {
+                      text: 'Отменить',
+                    },
+                    {
+                      text: 'Подтвердить',
+                      onClick: function(dialog, e) {
+                        $f7.dialog.preloader('Добавление товара...');
+                        $f7.request({
+                          url: '/server/proc/stock/entry/add.php',
+                          method: 'POST',
+                          dataType: 'json',
+                          data: {
+                            item: item_id,
+                            price: price,
+                            amount: amount,
+                          },
+                          success: function (data) {
+                            $f7.dialog.close();
+
+                          },
+                          error: function (data) {
+                            $f7.dialog.close();
+                            $f7.dialog.alert('Ошибка добавления товара');
+                          }
+                        });
+                      },
+                    },
+                  ],
+                }).open();
+              },
+            ).once('opened', function(event){
+              let el = event.el;
+              $(el).find('input')
+                .attr('type', 'number')
+                .attr('min', '1')
+                .attr('placeholder', 'Закупочная стоимость');
+              console.log("el", el);
+            });
+          },
+        ).once('opened', function(event){
+          let el = event.el;
+          $(el).find('input')
+            .attr('type', 'number')
+            .attr('min', '1')
+            .attr('placeholder', 'Количество');
+          console.log("el", el);
+        });
+      });
+
       $(page.el).find('.stock-count-change-btn').on('click', function() {
         let li = $(this).closest('li');
         let stock = +$(li).attr('data-id');
@@ -209,89 +406,6 @@
         let type = ($(this).attr('data-type') == 'plus' ? 'plus' : 'minus');
 
         if(type == 'plus'){
-          let dialog = $f7.dialog.prompt(
-            'Укажите количество',
-            'Добавление товара',
-            function (amount) {
-              if(amount <= 0) return $f7.dialog.alert('Количество должно быть больше нуля');
-              console.log(amount);
-              let dialog = $f7.dialog.prompt(
-                'Укажите закупочную стоимость одной единицы товара',
-                'Добавление товара',
-                function (price) {
-                  console.log(price);
-                  var dialog = app.dialog.create({
-                    title: 'Подтвердите ввод',
-                    text: `
-                      <table style="text-align: left; width: 100%;">
-                        <tr>
-                          <td>
-                            <b>Место:</b>
-                          </td>
-                          <td>
-                            'Основной склад'
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <b>Количество:</b>
-                          </td>
-                          <td>
-                            ${amount} ${declOfNum(amount, ['штука','штуки','штук'])}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <b>Стоимость:</b>
-                          </td>
-                          <td>
-                            ${bitsOfNum(price * amount, 2)} руб
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <b>Цена за шт:</b>
-                          </td>
-                          <td>
-                            ${bitsOfNum(price, 2)} руб
-                          </td>
-                        </tr>
-                      </table>
-                    `,
-                    buttons: [
-                      {
-                        text: 'Отменить',
-                      },
-                      {
-                        text: 'Подтвердить',
-                        onClick: function(dialog, e) {
-                          $(li).find('input').click(); 
-                        },
-                      },
-                    ],
-                  }).open();
-                },
-                function () {},
-                $(stock).find('.stock-rack').html(),
-              ).once('opened', function(event){
-                let el = event.el;
-                $(el).find('input')
-                  .attr('type', 'number')
-                  .attr('min', '1')
-                  .attr('placeholder', 'Закупочная стоимость');
-                console.log("el", el);
-              });
-            },
-            function () {},
-            $(stock).find('.stock-rack').html(),
-          ).once('opened', function(event){
-            let el = event.el;
-            $(el).find('input')
-              .attr('type', 'number')
-              .attr('min', '1')
-              .attr('placeholder', 'Количество');
-            console.log("el", el);
-          });
         }
         else {
           $f7.dialog.prompt(
