@@ -36,6 +36,7 @@ class ComposerStaticInitf8368095ab9d6393e8cd8c398e5f2c98
             'Symfony\\Component\\Process\\' => 26,
             'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\Cache\\' => 24,
+            'SVG\\' => 4,
         ),
         'P' => 
         array (
@@ -44,6 +45,7 @@ class ComposerStaticInitf8368095ab9d6393e8cd8c398e5f2c98
             'Psr\\Http\\Client\\' => 16,
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
+            'Picqer\\Barcode\\' => 15,
         ),
         'J' => 
         array (
@@ -110,6 +112,10 @@ class ComposerStaticInitf8368095ab9d6393e8cd8c398e5f2c98
         array (
             0 => __DIR__ . '/..' . '/symfony/cache',
         ),
+        'SVG\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/meyfa/php-svg/src',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -130,6 +136,10 @@ class ComposerStaticInitf8368095ab9d6393e8cd8c398e5f2c98
         'Psr\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
+        'Picqer\\Barcode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/picqer/php-barcode-generator/src',
         ),
         'JmesPath\\' => 
         array (
