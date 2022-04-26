@@ -75,6 +75,13 @@
     return true;
   }
 
+	function generateArticle($prefix){
+		$article = (string)$prefix;
+		$article .= (string)rand(1000000000000, 9999999999999);
+		$article = mb_strimwidth($article, 0, 12);
+		return (int)$article;
+	}
+
 	function mime2ext($mime)
 	{
 	  $mime_map = [
